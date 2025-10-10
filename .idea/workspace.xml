@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="adding requirements.txt">
+    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Add footer test and migration state files">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/body_elem.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/configuration/data.xml" beforeDir="false" afterPath="$PROJECT_DIR$/configuration/data.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/page_objects/web_objects/products_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/page_objects/web_objects/products_page.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_cases/test_web.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_cases/test_web.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trace.zip" beforeDir="false" afterPath="$PROJECT_DIR$/trace.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workflows/web_flow.py" beforeDir="false" afterPath="$PROJECT_DIR$/workflows/web_flow.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,10 +19,11 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="windsurf-edits" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -51,22 +51,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python tests.Python tests for test_cases.test_web.Test_Web.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_page_header.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;adding-footer-test&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Automation/Playwright-Project&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.github.copilot.settings.general.GeneralConfigurable&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python tests.Python tests for test_cases.test_web.Test_Web.executor": "Run",
+    "Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_page_header.executor": "Run",
+    "Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_top_deals_search.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/Automation/Playwright-Project",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "to.speed.mode.migration.done": "true"
   }
-}</component>
-  <component name="RunManager" selected="Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_page_header">
+}]]></component>
+  <component name="RunManager" selected="Python tests.Python tests for test_cases.test_web.Test_Web">
     <configuration name="gffdgdfg" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="test_automation_2024" />
       <option name="ENV_FILES" value="" />
@@ -119,6 +120,21 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
+    <configuration name="Python tests for test_cases.test_web.Test_Web.test_verify_top_deals_search" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="Playwright-Project" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_cases.test_web.Test_Web.test_verify_top_deals_search&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="Python tests for test_web.Test_Web.test_pages_links" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="full_stack_automation_final_project_2024" />
       <option name="ENV_FILES" value="" />
@@ -136,10 +152,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_page_header" />
         <item itemvalue="Python tests.Python tests for test_cases.test_web.Test_Web" />
-        <item itemvalue="Python.gffdgdfg" />
         <item itemvalue="Python tests.Python tests for test_web.Test_Web.test_pages_links" />
+        <item itemvalue="Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_top_deals_search" />
+        <item itemvalue="Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_page_header" />
+        <item itemvalue="Python.gffdgdfg" />
       </list>
     </recent_temporary>
   </component>
@@ -215,7 +232,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1756472320550</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL‎-00008" summary="Add footer test and migration state files">
+      <option name="closed" value="true" />
+      <created>1760107088763</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL‎-00008" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1760107088763</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -236,6 +261,7 @@
     <MESSAGE value="last commit" />
     <MESSAGE value="change to conftest.py" />
     <MESSAGE value="adding requirements.txt" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding requirements.txt" />
+    <MESSAGE value="Add footer test and migration state files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add footer test and migration state files" />
   </component>
 </project>

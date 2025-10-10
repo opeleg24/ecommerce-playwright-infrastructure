@@ -7,6 +7,7 @@
     <SLOW_MODE>100</SLOW_MODE>
     <BASE_URL>https://rahulshettyacademy.com/seleniumPractise/#/</BASE_URL>
     <!--WEB-->
+
     <!--data for test case01-->
 
     <COUNTER_INITIAL>0</COUNTER_INITIAL>

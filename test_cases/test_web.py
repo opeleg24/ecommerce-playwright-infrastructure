@@ -21,7 +21,7 @@ class Test_Web:
         WebFlows.verify_initial_amount_in_header_display(get_data("COUNTER_INITIAL"),
                                                          get_data("COUNTER_INITIAL"))
 
-    @allure.title("Test02: Add product to cart - verify amount in header display")
+    @allure.title("Test03 Add product to cart - verify amount in header display")
     @allure.description("This test adds a product to the cart and verifies the amount in the header display")
     def test_verify_add_product_to_cart(self):
         WebFlows.add_product_to_cart(get_data("PRODUCT"))
@@ -30,7 +30,7 @@ class Test_Web:
                                                            get_data("PRODUCT_ONE_PRICE"))
 
     @pytest.mark.usefixtures("refresh_page")
-    @allure.title("Test03: Add two product to cart - verify correct information in cart")
+    @allure.title("Test04: Add two product to cart - verify correct information in cart")
     @allure.description(
         "This test adds a product to the cart and verifies the correct information in the cart: name of product,"
         "price display, and total amount")
@@ -45,7 +45,7 @@ class Test_Web:
                                                  int(get_data("EXPECTED_TOTAL_PRICE_PROD_TWO")))
 
     @pytest.mark.usefixtures("refresh_page")
-    @allure.title("Test04: Verify the correct information in the checkout page")
+    @allure.title("Test05: Verify the correct information in the checkout page")
     @allure.description(
         "This test adds a product to the cart and verifies the correct information in the checkout page")
     def test_verify_checkout_page(self):
@@ -60,7 +60,7 @@ class Test_Web:
                                                               get_data("DISCOUNT"))
 
     @pytest.mark.usefixtures("main_page")
-    @allure.title("Test05: Verify purchase flow with correct promo code")
+    @allure.title("Test06: Verify purchase flow with correct promo code")
     @allure.description(
         "This test adds a product to the cart and verifies the promo code is correct & affects the total price")
     def test_verify_promo_code(self):
@@ -73,7 +73,7 @@ class Test_Web:
                                                               get_data("TOTAL_AFTER_DISCOUNT"))
 
     @pytest.mark.usefixtures("main_page")
-    @allure.title("Test06: Negative testing: verify purchase flow with incorrect promo code")
+    @allure.title("Test07: Negative testing: verify purchase flow with incorrect promo code")
     @allure.description(
         "This test adds a product to the cart and verifies the promo code is not correct & doesn't"
         "affects the total price")
@@ -87,7 +87,7 @@ class Test_Web:
                                                               get_data("EXPECTED_TOTAL_PRICE_PROD_CHECK_OUT_CODE"))
 
     @pytest.mark.usefixtures("main_page")
-    @allure.title("Test07: Verify purchase flow")
+    @allure.title("Test08: Verify purchase flow")
     @allure.description(
         "This test adds a product to the cart and verifies the complete purchase flow")
     def test_verify_purchase_flow(self):
@@ -97,7 +97,7 @@ class Test_Web:
         WebFlows.verify_successful_order_message(get_data("ORDER_MESSAGE"))
 
     @pytest.mark.usefixtures("main_page")
-    @allure.title("Test08: Verify no results products")
+    @allure.title("Test09: Verify no results products")
     @allure.description("This test verifies that once there are no results products, the correct message is displayed")
     def test08_verify_no_results_in_search(self):
         WebFlows.verify_no_results_products_display(get_data("SEARCH_INPUT"),
