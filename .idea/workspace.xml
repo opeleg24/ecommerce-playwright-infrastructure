@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Removal of duplicate getters code">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screen-shots/screen.png" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/screen.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_cases/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_cases/conftest.py" afterDir="false" />
-    </list>
+    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="update to screenshots folder" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -272,7 +268,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1781786284839</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL‎-00012" summary="update to screenshots folder">
+      <option name="closed" value="true" />
+      <created>1781787070437</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL‎-00012" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1781787070437</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -297,6 +301,7 @@
     <MESSAGE value="Changed functions to move from base page to common operation" />
     <MESSAGE value="updates to conftest" />
     <MESSAGE value="Removal of duplicate getters code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removal of duplicate getters code" />
+    <MESSAGE value="update to screenshots folder" />
+    <option name="LAST_COMMIT_MESSAGE" value="update to screenshots folder" />
   </component>
 </project>
