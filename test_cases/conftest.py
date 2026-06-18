@@ -105,7 +105,7 @@ def get_web_driver(playwright: Playwright, slow_motion: int):
 # def pytest_exception_interact(node, call, report):
 #     if report.failed:
 #         # if globals()['driver'] is not None:  # if it is None-> this is for API tests
-#         # image = "./playwright_project/screen-shots/screen_" + str(get_time_stamp()) + ".png"
-#         image_path = "./screen-shots/screen.png"
+#         # image = "./playwright_project/screenshots/screen_" + str(get_time_stamp()) + ".png"
+#         image_path = "./screenshots/screen.png"
 #         image = base.page.screenshot(path=image_path, full_page=True)
 #         allure.attach.file(image_path, attachment_type=allure.attachment_type.PNG)
