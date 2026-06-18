@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Playwright-Project.iml" filepath="$PROJECT_DIR$/.idea/Playwright-Project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../chameleon-web-master/.idea/chameleon_web_automation_project.iml" filepath="$PROJECT_DIR$/../chameleon-web-master/.idea/chameleon_web_automation_project.iml" />
       <module fileurl="file://$PROJECT_DIR$/../dcentralab_qa_home_assignment/.idea/dcentralab_home_assignment.iml" filepath="$PROJECT_DIR$/../dcentralab_qa_home_assignment/.idea/dcentralab_home_assignment.iml" />
     </modules>
   </component>

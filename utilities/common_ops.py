@@ -28,3 +28,23 @@ def get_data(node_name):
 def read_json_file(file_path):
     with open(file_path, 'r') as file:
         return json.load(file)
+
+####################################################################################################################
+# Function Name: calculate_total_price
+# Function Description: This function is used to calculate the total price
+# Function Parameters: quantity, price
+# Function Return: int - total price
+####################################################################################################################
+def calculate_total_price(quantity: int, price: int):
+    total = quantity * price
+    return total
+
+####################################################################################################################
+# Function Name: split_string
+# Function Description: This function is used to split a string and return the first part as int
+# Function Parameters: text
+# Function Return: int - first part of the split string
+####################################################################################################################
+def split_string(text: str):
+    text_split = text.split(" ")
+    return int(text_split[0])

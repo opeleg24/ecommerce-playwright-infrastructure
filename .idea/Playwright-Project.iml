@@ -7,5 +7,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="dcentralab_home_assignment" />
+    <orderEntry type="module" module-name="chameleon_web_automation_project" />
   </component>
 </module>

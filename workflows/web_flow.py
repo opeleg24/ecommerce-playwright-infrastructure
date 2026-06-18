@@ -6,7 +6,7 @@ from extentions.verifications import Verifications
 from utilities import base
 import allure
 
-from utilities.base import Base
+from utilities.common_ops import calculate_total_price, split_string
 
 
 
@@ -75,17 +75,17 @@ class WebFlows:
 
         # product quantity
         actual_quantity_product_one = UiActions.get_text(base.products_page.get_quantity().first)
-        actual_quantity_product_one_int = Base.split_string(actual_quantity_product_one)
+        actual_quantity_product_one_int = split_string(actual_quantity_product_one)
 
         actual_quantity_product_two = UiActions.get_text(base.products_page.get_quantity().last)
-        actual_quantity_product_two_int = Base.split_string(actual_quantity_product_two)
+        actual_quantity_product_two_int = split_string(actual_quantity_product_two)
 
         # product total amount
 
-        total_price_for_one_product = Base.calculate_total_price(actual_quantity_product_one_int,
-                                                                 actual_price_product_one)
-        total_price_for_two_products = Base.calculate_total_price(actual_quantity_product_two_int,
-                                                                  actual_price_product_two)
+        total_price_for_one_product = calculate_total_price(actual_quantity_product_one_int,
+                                                            actual_price_product_one)
+        total_price_for_two_products = calculate_total_price(actual_quantity_product_two_int,
+                                                             actual_price_product_two)
 
         Verifications.verify_soft_assert_equals(total_price_for_one_product, expected_total_price_for_one_product,
                                                 "total price")

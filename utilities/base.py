@@ -21,13 +21,3 @@ class Base:
         globals()['products_page'] = ProductsPage(page)
         globals()['check_out_page'] = CheckOutPage(page)
         globals()['country_page'] = CountryPage(page)
-
-    @staticmethod
-    def calculate_total_price(quantity: int, price: int):
-        total = quantity * price
-        return total
-
-    @staticmethod
-    def split_string(text: str):
-        text_split = text.split(" ")
-        return int(text_split[0])
