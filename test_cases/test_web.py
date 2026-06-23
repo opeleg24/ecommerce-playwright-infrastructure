@@ -57,10 +57,6 @@ class Test_Web:
         # Test Data
         product_one = test_data["product_one"]
         product_two = test_data["product_two"]
-        product_one_price = test_data["product_one_price"]
-        product_two_price = test_data["product_two_price"]
-        expected_total_price_prod_one = test_data["expected_total_price_prod_one"]
-        expected_total_price_prod_two = test_data["expected_total_price_prod_two"]
 
         # 1. Add first product to cart
         base.products_page.add_product_to_cart(product_one)
@@ -69,10 +65,7 @@ class Test_Web:
         # 3. Open cart
         base.products_page.open_cart()
         # 4. Verify cart information in cart
-        base.products_page.verify_cart_information_in_cart(product_one, product_two,
-                                                           product_one_price, product_two_price,
-                                                           expected_total_price_prod_one,
-                                                           expected_total_price_prod_two)
+        base.products_page.verify_cart_information_in_cart(test_data)
 
     @pytest.mark.usefixtures("refresh_page")
     @allure.title("Test05: Verify the correct information in the checkout page")
@@ -82,20 +75,17 @@ class Test_Web:
         """Add a product and verify its information on the checkout page."""
         # Test Data
         product_name = test_data["product_name"]
-        expected_price = test_data["expected_price"]
-        counter_one_product = test_data["counter_one_product"]
         expected_total_price = test_data["expected_total_price"]
-        discount = test_data["discount"]
 
         # 1. Add product to cart
         base.products_page.add_product_to_cart(product_name)
         # 2. Proceed to checkout flow
         base.products_page.proceed_to_checkout_flow()
         # 3. Verify cart information in table
-        base.check_out_page.verify_cart_information_in_table(product_name, expected_price,
-                                                             counter_one_product, expected_total_price)
+        base.check_out_page.verify_cart_information_in_table(product_name, test_data["expected_price"],
+                                                             test_data["counter_one_product"], expected_total_price)
         # 4. Verify cart information in table middle page
-        base.check_out_page.verify_cart_information_in_table_middle_page(expected_total_price, discount)
+        base.check_out_page.verify_cart_information_in_table_middle_page(expected_total_price, test_data["discount"])
 
     @pytest.mark.usefixtures("main_page")
     @allure.title("Test06: Verify purchase flow with correct promo code")
@@ -106,10 +96,6 @@ class Test_Web:
         # Test Data
         product_name = test_data["product_name"]
         correct_promo_code = test_data["correct_promo_code"]
-        success_message = test_data["success_message"]
-        expected_total_price = test_data["expected_total_price"]
-        discount = test_data["discount"]
-        total_after_discount = test_data["total_after_discount"]
 
         # 1. Add product to cart
         base.products_page.add_product_to_cart(product_name)
@@ -118,8 +104,10 @@ class Test_Web:
         # 3. Apply promo code
         base.check_out_page.apply_promo_code(correct_promo_code)
         # 4. Verify purchase flow with correct promo code
-        base.check_out_page.verify_purchase_flow_with_correct_promo_code(success_message, expected_total_price,
-                                                                          discount, total_after_discount)
+        base.check_out_page.verify_purchase_flow_with_correct_promo_code(test_data["success_message"],
+                                                                          test_data["expected_total_price"],
+                                                                          test_data["discount"],
+                                                                          test_data["total_after_discount"])
 
     @pytest.mark.usefixtures("main_page")
     @allure.title("Test07: Negative testing: verify purchase flow with incorrect promo code")
@@ -131,9 +119,6 @@ class Test_Web:
         # Test Data
         product_name = test_data["product_name"]
         incorrect_promo_code = test_data["incorrect_promo_code"]
-        unsuccess_message = test_data["unsuccess_message"]
-        expected_total_price = test_data["expected_total_price"]
-        discount = test_data["discount"]
 
         # 1. Add product to cart
         base.products_page.add_product_to_cart(product_name)
@@ -142,8 +127,10 @@ class Test_Web:
         # 3. Apply promo code
         base.check_out_page.apply_promo_code(incorrect_promo_code)
         # 4. Verify purchase flow with incorrect promo code
-        base.check_out_page.verify_purchase_flow_with_correct_promo_code(unsuccess_message, expected_total_price,
-                                                                          discount, expected_total_price)
+        base.check_out_page.verify_purchase_flow_with_correct_promo_code(test_data["unsuccess_message"],
+                                                                          test_data["expected_total_price"],
+                                                                          test_data["discount"],
+                                                                          test_data["expected_total_price"])
 
     @pytest.mark.usefixtures("main_page")
     @allure.title("Test08: Verify purchase flow")

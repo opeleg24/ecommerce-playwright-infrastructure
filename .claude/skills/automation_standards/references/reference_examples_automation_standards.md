@@ -27,6 +27,7 @@ their own fixtures (see section 8), never raw browser plumbing.
 8. [Fixtures & Configuration](#8-fixtures--configuration)
 9. [Page Object Internal Structure (SELECTORS → ATOMIC ACTIONS → FLOWS)](#9-page-object-internal-structure-selectors--atomic-actions--flows)
 10. [Data-Driven Verification — Loop Over Checks](#10-data-driven-verification--loop-over-checks)
+11. [Test Body Structure — Test Data Block + Numbered Steps](#11-test-body-structure--test-data-block--numbered-steps)
 
 ---
 
@@ -670,3 +671,164 @@ def verify_cart_information_in_table(self, product_name: str, price: str,
   is a helper, not a replacement for the flow structure.
 - A lone `verify_contains` or a single `verify_soft_assert_equals` call doesn't need the
   loop — only apply this pattern when two or more identical calls would otherwise repeat.
+
+---
+
+## 11. Test Body Structure — Test Data Block + Numbered Steps
+
+Every test method body follows a two-part layout: a `# Test Data` block up top that
+extracts `test_data[...]` values into named locals, then numbered step comments directly
+above each action call. This keeps the data in one scannable place and labels each step
+without burying the reader in noise.
+
+### ❌ Bad — inline dict access, no structure, no step labels
+
+```python
+@allure.title("Test03 Add product to cart - verify amount in header display")
+@allure.description("This test adds a product to the cart and verifies the amount in the header display")
+def test_verify_add_product_to_cart(self, test_data):
+    """Add a product to the cart and verify the header display amount."""
+    base.products_page.add_product_to_cart(test_data["product"])
+    base.products_page.open_cart()
+    base.products_page.verify_cart_information_in_header_display(test_data["counter_one_product"],
+                                                                  test_data["product_one_price"])
+```
+
+Problems:
+- `test_data["..."]` keys are scattered across the action calls — you must read the calls
+  to discover what data the test uses.
+- No visual separation between setup data and test steps.
+- A reader scanning quickly cannot tell how many steps the test has or what they are.
+
+### ✅ Good — `# Test Data` block + numbered step comments
+
+```python
+@allure.title("Test03 Add product to cart - verify amount in header display")
+@allure.description("This test adds a product to the cart and verifies the amount in the header display")
+def test_verify_add_product_to_cart(self, test_data):
+    """Add a product to the cart and verify the header display amount."""
+    # Test Data
+    product = test_data["product"]
+    counter_one_product = test_data["counter_one_product"]
+    product_one_price = test_data["product_one_price"]
+
+    # 1. Add product to cart
+    base.products_page.add_product_to_cart(product)
+    # 2. Open cart
+    base.products_page.open_cart()
+    # 3. Verify cart information in header display
+    base.products_page.verify_cart_information_in_header_display(counter_one_product, product_one_price)
+```
+
+**Rules:**
+
+- **`# Test Data` block first** — extract `test_data["key"]` into a named local for each
+  value that is **reused across multiple steps** or feeds an action step. All extractions
+  together, before any actions.
+- **One blank line** between the `# Test Data` block and the first step comment.
+- **Numbered step comments** — `# 1. <Action name>` directly above each action call.
+  The label names the action, matching the called method (e.g., `open_cart` → `# 2. Open cart`).
+- **No blank lines between consecutive steps** — the comment and its call stay visually paired.
+- Step labels are the one place "what" comments are intentional and welcome. They make the
+  test read like a numbered checklist and speed up debugging by letting you scan step numbers
+  in CI output.
+- When a page-object method needs many fields, prefer **Introduce Parameter Object** (A) over
+  a long parameter list. Fall back to **inline at the call site** (B) only for generic methods
+  shared across tests.
+
+---
+
+### A. Prefer: Introduce Parameter Object
+
+When a page-object method needs many fields that all come from **one test's data**, pass
+the whole `test_data` dict. The method destructures inside; the test's call site stays clean.
+Private helper methods keep their explicit, well-named params — destructuring happens only
+at the public entry point.
+
+#### ❌ Bad — 6-parameter list, test threads every field individually
+
+```python
+# products_page.py
+@allure.step("Verify cart information in cart panel")
+def verify_cart_information_in_cart(self, product_one: str, product_two: str,
+                                    price_product_one: int, price_product_two: int,
+                                    expected_total_price_for_one_product: int,
+                                    expected_total_price_for_two_products: int) -> None:
+    ...
+
+# test_web.py
+# 4. Verify cart information in cart
+base.products_page.verify_cart_information_in_cart(product_one, product_two,
+                                                   test_data["product_one_price"],
+                                                   test_data["product_two_price"],
+                                                   test_data["expected_total_price_prod_one"],
+                                                   test_data["expected_total_price_prod_two"])
+```
+
+#### ✅ Good — data object passed in; method owns the destructuring
+
+```python
+# products_page.py
+@allure.step("Verify cart information in cart panel")
+def verify_cart_information_in_cart(self, data: dict) -> None:
+    """Open the cart and verify product names, unit prices, and line totals."""
+    self.open_cart()
+    self._verify_cart_product_names(data["product_one"], data["product_two"])
+    actual_price_one, actual_price_two = self._verify_cart_prices(
+        data["product_one_price"], data["product_two_price"])
+    self._verify_cart_totals(actual_price_one, actual_price_two,
+                             data["expected_total_price_prod_one"],
+                             data["expected_total_price_prod_two"])
+
+# test_web.py
+# Test Data
+product_one = test_data["product_one"]   # reused: steps 1 and 2
+product_two = test_data["product_two"]   # reused: steps 2 and 4
+
+# 1. Add first product to cart
+base.products_page.add_product_to_cart(product_one)
+# 2. Add second product to cart
+base.products_page.add_two_products_to_cart(product_two)
+# 3. Open cart
+base.products_page.open_cart()
+# 4. Verify cart information in cart
+base.products_page.verify_cart_information_in_cart(test_data)
+```
+
+The `# Test Data` block only names the two product values that are reused across steps.
+The four price/total values belong to the verify method — the method, not the test, owns them.
+
+---
+
+### B. Fallback: Inline at the call site
+
+Use this when the page-object method is a **generic helper reused by multiple tests with
+differently-named data keys**. Converting such a method to `data: dict` would break because
+each caller's dict has different key names — the method can't hard-code which key to read.
+Keep its explicit params and pass `test_data["key"]` inline at each call site.
+
+```python
+# verify_purchase_flow_with_correct_promo_code is shared by Test06 AND Test07.
+# Test06 data has: success_message, total_after_discount
+# Test07 data has: unsuccess_message  (no total_after_discount — uses expected_total_price instead)
+# → method must stay explicit; each test inlines its own keys.
+
+# Test06 — correct promo code
+base.check_out_page.verify_purchase_flow_with_correct_promo_code(test_data["success_message"],
+                                                                  test_data["expected_total_price"],
+                                                                  test_data["discount"],
+                                                                  test_data["total_after_discount"])
+
+# Test07 — incorrect promo code
+base.check_out_page.verify_purchase_flow_with_correct_promo_code(test_data["unsuccess_message"],
+                                                                  test_data["expected_total_price"],
+                                                                  test_data["discount"],
+                                                                  test_data["expected_total_price"])
+```
+
+**Decision rule:**
+
+| Situation | Technique |
+|---|---|
+| Method called by one test; all fields from that test's data | **A — Introduce Parameter Object** (`data: dict`) |
+| Method shared by multiple tests with different data key names | **B — Inline** (`test_data["key"]` at call site) |

@@ -116,9 +116,43 @@ The high-level method then composes them into a readable, self-documenting flow.
 
 *(See `references/reference_examples_automation_standards.md` section 7 for dataclass test-data patterns and section 8 for config/fixtures.)*
 
+## 8. Test Body Structure (Test Data → Numbered Steps)
+
+Every test method body follows a two-part layout:
+
+1. **`# Test Data` block** — extract each `test_data["..."]` value into a local variable named after its key. Group all extractions at the top, before any actions.
+2. **Numbered step comments** — put `# 1. <Action name>`, `# 2. <Action name>`, … directly above each action call. The label names the action (matches the called method). This is the one place "what" comments are intentional — they make test steps scannable at a glance.
+
+**When a page-object method needs many fields — prefer *Introduce Parameter Object*:**
+- If a verify or flow method would take more than ~3 parameters and all those values come from one test's data, pass the whole `test_data` dict and let the method destructure inside. This eliminates the long argument list at the call site.
+- Keep the `# Test Data` block to the small set of values **reused across action steps** (added to cart, passed to multiple calls). Single-use verify arguments go via the data object, not extracted to locals.
+- **Fallback — inline at the call site:** when the method is a generic helper reused by multiple tests with differently-named keys (e.g. `success_message` vs `unsuccess_message`), keep its explicit params and pass `test_data["key"]` inline. Do not convert to `data: dict` in this case — the key names would differ per caller.
+
+**Spacing rules:**
+- One blank line between the `# Test Data` block and the first step comment.
+- No blank lines between consecutive numbered steps.
+
+```python
+def test_verify_add_product_to_cart(self, test_data):
+    """Add a product to the cart and verify the header display amount."""
+    # Test Data
+    product = test_data["product"]
+    counter_one_product = test_data["counter_one_product"]
+    product_one_price = test_data["product_one_price"]
+
+    # 1. Add product to cart
+    base.products_page.add_product_to_cart(product)
+    # 2. Open cart
+    base.products_page.open_cart()
+    # 3. Verify cart information in header display
+    base.products_page.verify_cart_information_in_header_display(counter_one_product, product_one_price)
+```
+
+*(See `references/reference_examples_automation_standards.md` section 11 for the full bad/good comparison.)*
+
 ---
 
-## 8. Automation Review Checklist
+## 9. Automation Review Checklist
 
 Before completing ANY Playwright automation change, verify:
 
@@ -131,6 +165,7 @@ Before completing ANY Playwright automation change, verify:
 - [ ] UI state checked with web-first `expect(locator)` assertions, not one-shot `assert` (section 6)
 - [ ] Repeated soft-assert checks use `HelpersPage.verify_all_soft_equals` with uniform `(actual, expected, message)` 3-tuples — no stacked `verify_soft_assert_equals` calls (section 6)
 - [ ] Test data is structured/typed; `base_url`, creds, and timeouts come from config, not literals (section 7)
+- [ ] Each test body opens with a `# Test Data` block and numbers each action step with `# N. <Action name>` comments (section 8)
 - [ ] All applicable `python_standards` rules also pass
 
 If any rule is violated, fix it before presenting the code.

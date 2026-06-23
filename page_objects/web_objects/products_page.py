@@ -187,13 +187,12 @@ class ProductsPage:
         )
 
     @allure.step("Verify cart information in cart panel")
-    def verify_cart_information_in_cart(self, product_one: str, product_two: str,
-                                        price_product_one: int, price_product_two: int,
-                                        expected_total_price_for_one_product: int,
-                                        expected_total_price_for_two_products: int) -> None:
+    def verify_cart_information_in_cart(self, data: dict) -> None:
         """Open the cart and verify product names, unit prices, and line totals."""
         self.open_cart()
-        self._verify_cart_product_names(product_one, product_two)
-        actual_price_one, actual_price_two = self._verify_cart_prices(price_product_one, price_product_two)
+        self._verify_cart_product_names(data["product_one"], data["product_two"])
+        actual_price_one, actual_price_two = self._verify_cart_prices(
+            data["product_one_price"], data["product_two_price"])
         self._verify_cart_totals(actual_price_one, actual_price_two,
-                                 expected_total_price_for_one_product, expected_total_price_for_two_products)
+                                 data["expected_total_price_prod_one"],
+                                 data["expected_total_price_prod_two"])
