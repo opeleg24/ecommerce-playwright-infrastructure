@@ -25,6 +25,7 @@ their own fixtures (see section 8), never raw browser plumbing.
 6. [Assertions — Web-First `expect`](#6-assertions--web-first-expect)
 7. [Test Data as Dataclass](#7-test-data-as-dataclass)
 8. [Fixtures & Configuration](#8-fixtures--configuration)
+9. [Page Object Internal Structure (SELECTORS → ATOMIC ACTIONS → FLOWS)](#9-page-object-internal-structure-selectors--atomic-actions--flows)
 
 ---
 
@@ -460,3 +461,153 @@ ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
 With `--base-url` set, page objects call `self.page.goto("/login")` and Playwright
 resolves the path against the configured host — so switching environments is a config
 change, not a code change.
+
+---
+
+## 9. Page Object Internal Structure (SELECTORS → ATOMIC ACTIONS → FLOWS)
+
+Every page object must be split into three named sections. Comment banners make the
+boundaries explicit and scannable.
+
+### The rule in one sentence
+
+**SELECTORS** hold locators; **ATOMIC ACTIONS** do exactly one thing each (via `UiActions`);
+**FLOWS** compose atomic actions from the same page — cross-page flows stay in the workflow layer.
+
+---
+
+### ❌ Bad — flat class, no structure, raw locators inside flow methods
+
+```python
+class ProductsPage:
+    def __init__(self, page: Page):
+        self.page = page
+        self.cart_icon = self.page.locator("[class='cart-icon']")
+        self.proceed_to_checkout = self.page.locator("text=PROCEED TO CHECKOUT")
+        self.items_indicator_header = self.page.locator("[class='cart-info'] tr:first-child strong")
+
+    # mixes locator access, UiActions calls, and two-step composition — no structure
+    def proceed_to_checkout_flow(self) -> None:
+        UiActions.click(self.cart_icon)
+        UiActions.click(self.proceed_to_checkout)
+
+    # raw locators accessed from the workflow layer — page internals leak out
+    # (web_flow.py): UiActions.get_text(base.products_page.items_indicator_header)
+```
+
+Problems:
+- No visible structure — a reader must scan the whole class to understand its shape.
+- The workflow layer reaches into raw locators instead of calling named methods, coupling it to the DOM.
+- Single-page verify logic is scattered across `WebFlows` instead of living with its page.
+
+---
+
+### ✅ Good — three-part structure, clean boundary between layers
+
+```python
+import allure
+from playwright.sync_api import Page
+
+from extentions.ui_actions import UiActions
+from extentions.verifications import Verifications
+
+
+class ProductsPage:
+    """Page object for the products listing, header cart indicator, and cart panel."""
+
+    def __init__(self, page: Page):
+        self.page = page
+
+        # =================== SELECTORS ===================
+        # -- Page header / footer --
+        self.page_header = self.page.locator("[class='brand greenLogo']")
+        self.page_footer = self.page.locator("footer")
+
+        # -- Cart indicator (header) --
+        self.items_indicator_header = self.page.locator("[class='cart-info'] tr:first-child strong")
+        self.price_indicator_header = self.page.locator("[class='cart-info'] tr:last-child strong")
+        self.cart_icon = self.page.locator("[class='cart-icon']")
+
+        # -- Cart panel --
+        self.proceed_to_checkout = self.page.locator("text=PROCEED TO CHECKOUT")
+
+    # =================== ATOMIC ACTIONS ===================
+    # -- Page header / footer --
+    def get_page_header_text(self) -> str:
+        return UiActions.get_text(self.page_header)
+
+    def get_footer_text(self) -> str:
+        return UiActions.get_text(self.page_footer)
+
+    # -- Cart indicator (header) --
+    def get_header_item_count(self) -> str:
+        return UiActions.get_text(self.items_indicator_header)
+
+    def get_header_total_price(self) -> str:
+        return UiActions.get_text(self.price_indicator_header)
+
+    # -- Cart panel --
+    def open_cart(self) -> None:
+        UiActions.click(self.cart_icon)
+
+    def click_proceed_to_checkout(self) -> None:
+        UiActions.click(self.proceed_to_checkout)
+
+    # =================== FLOWS ===================
+    @allure.step("Proceed to checkout page")
+    def proceed_to_checkout_flow(self) -> None:
+        """Open the cart and navigate to the checkout page."""
+        self.open_cart()
+        self.click_proceed_to_checkout()
+
+    @allure.step("Verify page header text")
+    def verify_page_header(self, expected: str) -> None:
+        """Verify the brand header text matches the expected value."""
+        Verifications.verify_soft_assert_equals(
+            self.get_page_header_text().strip(), expected, "Page header"
+        )
+
+    @allure.step("Verify initial amount in header display")
+    def verify_initial_amount_in_header_display(self, initial_items: str, initial_price: str) -> None:
+        """Verify the header shows the expected initial item count and price."""
+        Verifications.verify_soft_assert_equals(self.get_header_item_count(), initial_items)
+        Verifications.verify_soft_assert_equals(self.get_header_total_price(), initial_price)
+```
+
+---
+
+### The workflow layer — cross-page flows only
+
+When a flow must touch **more than one page object**, it belongs in the workflow layer,
+not inside any single page object.
+
+```python
+# workflows/web_flow.py
+import allure
+from utilities import base
+
+
+class WebFlows:
+
+    @staticmethod
+    @allure.step("Proceed to final country page")
+    def proceed_to_country_page_flow() -> None:
+        """Navigate from the products page through checkout to the country page."""
+        base.products_page.proceed_to_checkout_flow()   # ProductsPage
+        base.check_out_page.click_place_order()          # CheckOutPage
+```
+
+This method coordinates two page objects, so it lives in `WebFlows`. Neither
+`ProductsPage` nor `CheckOutPage` knows about the other.
+
+---
+
+### Decision guide — where does a method belong?
+
+| Condition | Where it goes |
+|---|---|
+| Sets a locator attribute (`self.<x> = ...`) | `__init__` SELECTORS |
+| Does exactly one UI action or reads one value | ATOMIC ACTIONS |
+| Composes this page's own atomic actions | FLOWS (same page object) |
+| Calls `Verifications.*` using this page's getters | FLOWS (same page object) |
+| Touches locators / methods from two or more page objects | Workflow layer (`WebFlows`) |

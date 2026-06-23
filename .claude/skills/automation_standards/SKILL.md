@@ -37,7 +37,34 @@ This skill targets **Playwright for Python, sync API**, with **pytest-playwright
 
 *(See `references/reference_examples_automation_standards.md` section 2 for injected-`Page` objects and section 8 for the fixture wiring.)*
 
-## 2. Atomic Action Methods (Extract Method)
+## 2. Page Object Internal Structure (SELECTORS → ATOMIC ACTIONS → FLOWS)
+
+Every page object must be organised into three explicit sections, each marked with a comment banner:
+
+```python
+# =================== SELECTORS ===================
+# =================== ATOMIC ACTIONS ===================
+# =================== FLOWS ===================
+```
+
+**SELECTORS** (inside `__init__`)
+- Declare every locator as an instance attribute. Group by UI area under short sub-comments.
+- No logic here — only `self.<name> = self.page.locator(...)` assignments.
+
+**ATOMIC ACTIONS**
+- One method, one thing: a single click, fill, select, or get.
+- Implement via `UiActions` wrappers (or equivalent `@allure.step`-decorated helpers) so allure instrumentation is preserved.
+- No assertions, no multi-step compositions — each body is typically one line.
+- Method names replace comments: `open_cart()` needs no `# click cart icon` annotation.
+
+**FLOWS**
+- Compose the same page's own atomic actions into multi-step sequences.
+- Single-page verify methods (calling `Verifications.*` on the page's own getters) also live here.
+- **A flow that touches more than one page object belongs in the workflow layer** (e.g. `WebFlows`), not in any page object. Keep cross-page orchestration in the workflow layer.
+
+*(See `references/reference_examples_automation_standards.md` section 9 for a full three-part example drawn from this project.)*
+
+## 3. Atomic Action Methods (Extract Method)
 
 Large page object methods that mix UI actions, verifications, and data logic
 should be decomposed into small **atomic action methods** — each doing ONE thing.
@@ -53,7 +80,7 @@ The high-level method then composes them into a readable, self-documenting flow.
 
 *(See `references/reference_examples_automation_standards.md` section 1 for the full Extract Method walkthrough.)*
 
-## 3. Locators
+## 4. Locators
 
 - **Prefer user-facing locators** in this order: `get_by_role` → `get_by_label` → `get_by_placeholder` / `get_by_text` → `get_by_test_id`. Fall back to CSS only when nothing user-facing fits; avoid XPath and brittle structural chains.
 - Define locators as **`Locator` properties** on the page object (lazy, defined once), not as raw strings repeated inside methods.
@@ -62,7 +89,7 @@ The high-level method then composes them into a readable, self-documenting flow.
 
 *(See `references/reference_examples_automation_standards.md` section 3 for locator examples and section 4 for DRY locator loops.)*
 
-## 4. Waiting & Synchronization
+## 5. Waiting & Synchronization
 
 - **Rely on auto-waiting.** Playwright actions (`click`, `fill`, etc.) wait for the element to be visible, enabled, and stable automatically. Don't precede them with manual waits.
 - **Use web-first assertions** for state: `expect(locator).to_be_visible()`, `.to_have_text(...)`, `.to_be_enabled()`. These retry automatically — no polling loops.
@@ -72,7 +99,7 @@ The high-level method then composes them into a readable, self-documenting flow.
 
 *(See `references/reference_examples_automation_standards.md` section 5 for auto-waiting and assertion patterns.)*
 
-## 5. Assertions
+## 6. Assertions
 
 - Use Playwright's **`expect`** (web-first, auto-retrying) for anything UI-state related, not bare `assert` on a value read once.
 - Assert on user-visible state (`to_be_visible`, `to_have_text`, `to_have_value`, `to_be_enabled`) rather than implementation details.
@@ -80,7 +107,7 @@ The high-level method then composes them into a readable, self-documenting flow.
 
 *(See `references/reference_examples_automation_standards.md` section 6 for assertion examples.)*
 
-## 6. Test Data & Configuration
+## 7. Test Data & Configuration
 
 - Pass structured, typed test data (dataclasses) rather than loose dicts where practical.
 - No hardcoded URLs, credentials, or environment values in tests — use `base_url` config, env vars, or fixtures.
@@ -90,17 +117,18 @@ The high-level method then composes them into a readable, self-documenting flow.
 
 ---
 
-## 7. Automation Review Checklist
+## 8. Automation Review Checklist
 
 Before completing ANY Playwright automation change, verify:
 
 - [ ] Page objects receive an injected `Page` (from the `page` fixture) — none create their own (section 1)
 - [ ] Each page object is exposed via its own pytest fixture; tests don't wire up raw `Page` (section 1)
-- [ ] Locators are `Locator` properties using `get_by_role`/`get_by_label`/`get_by_test_id`; no XPath or brittle CSS (section 3)
-- [ ] Large flows are decomposed into atomic action methods; names replace comments (section 2)
-- [ ] No manual sleeps or `wait_for_timeout` for sync — auto-waiting and `expect` used instead (section 4)
-- [ ] UI state checked with web-first `expect(locator)` assertions, not one-shot `assert` (section 5)
-- [ ] Test data is structured/typed; `base_url`, creds, and timeouts come from config, not literals (section 6)
+- [ ] Each page object is split into SELECTORS / ATOMIC ACTIONS / FLOWS sections with comment banners; flows use only that page's own atomic actions; cross-page flows live in the workflow layer (section 2)
+- [ ] Locators are `Locator` properties using `get_by_role`/`get_by_label`/`get_by_test_id`; no XPath or brittle CSS (section 4)
+- [ ] Large flows are decomposed into atomic action methods; names replace comments (section 3)
+- [ ] No manual sleeps or `wait_for_timeout` for sync — auto-waiting and `expect` used instead (section 5)
+- [ ] UI state checked with web-first `expect(locator)` assertions, not one-shot `assert` (section 6)
+- [ ] Test data is structured/typed; `base_url`, creds, and timeouts come from config, not literals (section 7)
 - [ ] All applicable `python_standards` rules also pass
 
 If any rule is violated, fix it before presenting the code.
