@@ -74,18 +74,15 @@ If the same 3+ lines appear in more than one place, extract to a shared method.
 def set_first_name(self, name: str):
     cleaned = name.strip().title()
     self.record['first_name'] = cleaned
-    logger.debug(f"Set first_name={cleaned}")
 
 def set_last_name(self, name: str):
     cleaned = name.strip().title()
     self.record['last_name'] = cleaned
-    logger.debug(f"Set last_name={cleaned}")
 
 # ✅ Good — one reusable helper
 def set_name_field(self, field_name: str, value: str):
     cleaned = value.strip().title()
     self.record[field_name] = cleaned
-    logger.debug(f"Set {field_name}={cleaned}")
 ```
 
 ---
@@ -130,7 +127,6 @@ def run_report(self, report_id: int):
     html += "</body></html>"
     with open(f"/tmp/report_{report_id}.html", "w") as f:
         f.write(html)
-    logger.info(f"Report generated: report_id={report_id}")
 ```
 
 ```python
@@ -140,7 +136,6 @@ def run_report(self, report_id: int):
     report_rows = self.fetch_report_data(report_id)
     html_content = self.render_report_html(report, report_rows)
     self.save_report_file(report_id, html_content)
-    logger.info(f"Report generated: report_id={report_id}")
 ```
 
 > For decomposing large UI/page-object methods into atomic action methods,
@@ -345,7 +340,6 @@ class PatientService:
 class PatientService:
     def __init__(self):
         self.db = DatabaseConnection("prod-server:5432")
-        self.logger = logging.getLogger("patient")
         self.cache = RedisCache("redis-host:6379")
 
     def get_patient(self, patient_id: int) -> dict:
@@ -358,19 +352,15 @@ class PatientService:
 ```python
 # ✅ Good — dependencies passed in, easy to test with mocks
 class PatientService:
-    def __init__(self, db: DatabaseConnection, cache: CacheInterface, logger: logging.Logger):
+    def __init__(self, db: DatabaseConnection, cache: CacheInterface):
         self.db = db
         self.cache = cache
-        self.logger = logger
 
     def get_patient(self, patient_id: int) -> dict:
         cached = self.cache.get(f"patient:{patient_id}")
         if cached:
-            self.logger.debug(f"Cache hit: patient_id={patient_id}")
             return cached
-        patient = self.db.query(f"SELECT * FROM patients WHERE id={patient_id}")
-        self.logger.info(f"Fetched patient from DB: patient_id={patient_id}")
-        return patient
+        return self.db.query(f"SELECT * FROM patients WHERE id={patient_id}")
 ```
 
 > For injecting a driver / page context into a page object, see the

@@ -1,5 +1,6 @@
 import pytest
 from playwright.sync_api import Browser, Playwright
+from smart_assertions import verify_expectations
 
 from utilities import base
 from utilities.base import Base
@@ -37,6 +38,13 @@ def init_api(playwright: Playwright):
     yield
 
     base.request_context.dispose()
+
+
+@pytest.fixture(autouse=True)
+def verify_after_test():
+    """Call verify_expectations automatically after every test."""
+    yield
+    verify_expectations()
 
 
 @pytest.fixture()

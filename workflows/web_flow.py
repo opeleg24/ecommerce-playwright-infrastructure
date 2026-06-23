@@ -1,5 +1,4 @@
 import allure
-from smart_assertions import verify_expectations
 
 from extentions.ui_actions import UiActions
 from extentions.verifications import Verifications
@@ -15,6 +14,13 @@ class WebFlows:
         """Verify the page header text matches the expected value."""
         actual_header = base.products_page.get_page_header_text()
         Verifications.verify_soft_assert_equals(actual_header.strip(), expected_header, "Page header")
+
+    @staticmethod
+    @allure.step("Verify page footer text")
+    def verify_page_footer(expected_footer: str) -> None:
+        """Verify the page footer contains the expected text."""
+        actual_footer = UiActions.get_text(base.products_page.page_footer)
+        Verifications.verify_contains(expected_footer, actual_footer.strip(), "Page footer")
 
     @staticmethod
     @allure.step("Verify initial amount in header display")
@@ -43,7 +49,6 @@ class WebFlows:
         Verifications.verify_soft_assert_equals(actual_price_product, expected_price, "price")
         actual_price_header = UiActions.get_text(base.products_page.price_indicator_header)
         Verifications.verify_soft_assert_equals(actual_price_header, expected_price, "price header")
-        verify_expectations()
 
     @staticmethod
     @allure.step("Add two product to cart")
@@ -94,7 +99,6 @@ class WebFlows:
         WebFlows._verify_cart_totals(actual_price_one, actual_price_two,
                                      expected_total_price_for_one_product,
                                      expected_total_price_for_two_products)
-        verify_expectations()
 
     @staticmethod
     @allure.step("Verify cart information in table inside checkout page")
@@ -108,7 +112,6 @@ class WebFlows:
         Verifications.verify_soft_assert_equals(actual_quantity, counter)
         actual_total_price = UiActions.get_text(base.check_out_page.table_total_price.last)
         Verifications.verify_soft_assert_equals(actual_total_price, total_price, "total price")
-        verify_expectations()
 
     @staticmethod
     @allure.step("Verify cart information in table inside checkout page - Middle page")
@@ -120,7 +123,6 @@ class WebFlows:
         Verifications.verify_soft_assert_equals(actual_discount_perc, discount_perc, "discount percentage")
         total_after_discount = UiActions.get_text(base.check_out_page.total_after_discount)
         Verifications.verify_soft_assert_equals(total_after_discount, total_price, "total after discount")
-        verify_expectations()
 
     @staticmethod
     @allure.step("Enter promo code")
@@ -142,7 +144,6 @@ class WebFlows:
         Verifications.verify_soft_assert_equals(actual_discount, discount, "discount percentage")
         actual_total_after_discount = UiActions.get_text(base.check_out_page.total_after_discount)
         Verifications.verify_soft_assert_equals(actual_total_after_discount, total_after_discount, "total after discount")
-        verify_expectations()
 
     @staticmethod
     @allure.step("Filling country page information")
@@ -187,12 +188,4 @@ class WebFlows:
                                                 UiActions.get_text(base.products_page.no_results_large_message))
         Verifications.verify_soft_assert_equals(no_results_small,
                                                 UiActions.get_text(base.products_page.no_results_small_message))
-        verify_expectations()
 
-    @staticmethod
-    @allure.step("Verify page footer text")
-    def verify_page_footer(expected_footer: str) -> None:
-        """Verify the page footer contains the expected text."""
-        actual_footer = UiActions.get_text(base.products_page.page_footer)
-        Verifications.verify_contains(expected_footer, actual_footer.strip(), "Page footer")
-        verify_expectations()

@@ -11,7 +11,7 @@ class Test_Web:
 
     @allure.title("Test01: Verify page header and footer text")
     @allure.description("This test verifies that the page header and footer display the correct text")
-    def test_verify_page_header(self):
+    def test_verify_page_crucial_information(self):
         """Verify the page header and footer display the expected text."""
         WebFlows.verify_page_header(get_data("PAGE_HEADER"))
         WebFlows.verify_page_footer(get_data("PAGE_FOOTER"))
