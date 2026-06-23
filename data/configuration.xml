@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Environment>
+    <!--Setup-->
+    <BROWSER_TYPE>chrome</BROWSER_TYPE>
+    <SLOW_MODE>100</SLOW_MODE>
+    <BASE_URL>https://rahulshettyacademy.com/seleniumPractise/#/</BASE_URL>
+    <BASE_URL_API>https://rahulshettyacademy.com/seleniumPractise/data/</BASE_URL_API>
+</Environment>

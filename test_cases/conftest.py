@@ -4,7 +4,7 @@ from smart_assertions import verify_expectations
 
 from utilities import base
 from utilities.base import Base
-from utilities.common_ops import get_data
+from utilities.common_ops import get_data, read_json_file, TEST_DATA_FILE_PATH
 
 DEFAULT_TIMEOUT_MS = 10000
 
@@ -57,6 +57,20 @@ def refresh_page():
 def main_page():
     """Navigate back to the application home page before a test."""
     base.page.goto(get_data('BASE_URL'))
+
+
+@pytest.fixture(scope="session")
+def _all_test_data() -> dict:
+    """Parse the test-data JSON once for the entire test run."""
+    return read_json_file(TEST_DATA_FILE_PATH)
+
+
+@pytest.fixture()
+def test_data(request, _all_test_data: dict) -> dict:
+    """Return the current test's data object, resolved by suite section and test name."""
+    # Derive suite key from the test module filename: test_web.py -> "web"
+    suite_section = request.path.stem.removeprefix("test_")
+    return _all_test_data[suite_section][request.node.name]
 
 
 def get_chrome_driver(playwright: Playwright, slow_motion: int) -> Browser:

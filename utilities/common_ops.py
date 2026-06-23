@@ -2,7 +2,8 @@ import json
 import time
 import xml.etree.ElementTree as ET
 
-CONFIG_FILE_PATH = "./configuration/data.xml"
+CONFIG_FILE_PATH = "./data/configuration.xml"
+TEST_DATA_FILE_PATH = "./data/test_data.json"
 
 
 def get_time_stamp() -> float:

@@ -1,0 +1,64 @@
+{
+  "web": {
+    "test_verify_page_crucial_information": {
+      "page_header": "GREENKART",
+      "page_footer": "© 2019 GreenKart - buy veg and fruits online when verifying Page footer"
+    },
+    "test_verify_initial_header_amount": {
+      "counter_initial": "0"
+    },
+    "test_verify_add_product_to_cart": {
+      "product": "Brocolli - 1 Kg",
+      "counter_one_product": "1",
+      "product_one_price": "120"
+    },
+    "test_verify_product_info_in_cart": {
+      "product_one": "Brocolli - 1 Kg",
+      "product_two": "Cucumber - 1 Kg",
+      "product_one_price": 120,
+      "product_two_price": 48,
+      "expected_total_price_prod_one": 120,
+      "expected_total_price_prod_two": 96
+    },
+    "test_verify_checkout_page": {
+      "product_name": "Tomato - 1 Kg",
+      "expected_price": "16",
+      "counter_one_product": "1",
+      "expected_total_price": "16",
+      "discount": "0%"
+    },
+    "test_verify_promo_code": {
+      "product_name": "Corn - 1 Kg",
+      "correct_promo_code": "rahulshettyacademy",
+      "success_message": "Code applied ..!",
+      "expected_total_price": "75",
+      "discount": "10%",
+      "total_after_discount": "67.5"
+    },
+    "test_verify_incorrect_promo_code": {
+      "product_name": "Corn - 1 Kg",
+      "incorrect_promo_code": "TEST111",
+      "unsuccess_message": "Invalid code ..!",
+      "expected_total_price": "75",
+      "discount": "0%"
+    },
+    "test_verify_purchase_flow": {
+      "product": "Brocolli - 1 Kg",
+      "country": "Israel",
+      "order_message": "Thank you, your order has been placed successfully"
+    },
+    "test_verify_no_results_in_search": {
+      "search_input": "TEST",
+      "no_results_large": "Sorry, no products matched your search!",
+      "no_results_small": "Enter a different keyword and try."
+    }
+  },
+  "api": {
+    "test_verify_initial_header_amount": {
+      "product_name": "Brocolli - 1 Kg"
+    },
+    "test_verify_amount_of_products": {
+      "amount_of_products": 30
+    }
+  }
+}

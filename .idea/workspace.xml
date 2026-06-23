@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Adding the helpers page">
-      <change beforePath="$PROJECT_DIR$/trace.zip" beforeDir="false" afterPath="$PROJECT_DIR$/trace.zip" afterDir="false" />
+    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="change #1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configuration/data.xml" beforeDir="false" afterPath="$PROJECT_DIR$/data/configuration.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_cases/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_cases/conftest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_cases/test_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_cases/test_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_cases/test_web.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_cases/test_web.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilities/common_ops.py" beforeDir="false" afterPath="$PROJECT_DIR$/utilities/common_ops.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -337,7 +342,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1782214687175</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL‎-00021" summary="change #1">
+      <option name="closed" value="true" />
+      <created>1782215219464</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL‎-00021" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1782215219464</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -371,6 +384,7 @@
     <MESSAGE value="Updating the automation skill To accommodate this new three-layer structure" />
     <MESSAGE value="Creating helpers pages &#10;Creating one engine generic that feeds each data &#10;Updating the name to actions instead of atomic actions" />
     <MESSAGE value="Adding the helpers page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding the helpers page" />
+    <MESSAGE value="change #1" />
+    <option name="LAST_COMMIT_MESSAGE" value="change #1" />
   </component>
 </project>
