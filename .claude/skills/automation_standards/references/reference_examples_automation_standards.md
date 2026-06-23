@@ -26,6 +26,7 @@ their own fixtures (see section 8), never raw browser plumbing.
 7. [Test Data as Dataclass](#7-test-data-as-dataclass)
 8. [Fixtures & Configuration](#8-fixtures--configuration)
 9. [Page Object Internal Structure (SELECTORS → ATOMIC ACTIONS → FLOWS)](#9-page-object-internal-structure-selectors--atomic-actions--flows)
+10. [Data-Driven Verification — Loop Over Checks](#10-data-driven-verification--loop-over-checks)
 
 ---
 
@@ -611,3 +612,61 @@ This method coordinates two page objects, so it lives in `WebFlows`. Neither
 | Composes this page's own atomic actions | FLOWS (same page object) |
 | Calls `Verifications.*` using this page's getters | FLOWS (same page object) |
 | Touches locators / methods from two or more page objects | Workflow layer (`WebFlows`) |
+
+---
+
+## 10. Data-Driven Verification — Loop Over Checks
+
+When a flow method contains the same `Verifications.verify_soft_assert_equals(actual, expected, message)`
+call repeated line-by-line with only the values changing, collapse it into a list of
+`(actual, expected, message)` tuples passed to `HelpersPage.verify_all_soft_equals`.
+
+This is the automation-layer application of the DRY principle: repetitive blocks → structured
+data + loop. See `python_standards` references section 1.1 for the general pattern.
+
+`HelpersPage` lives in `utilities/helpers_page.py` and is stateless — import it directly
+in any page object (exactly like `Verifications` or `UiActions`).
+
+### ❌ Bad — repeated calls, same pattern copy-pasted
+
+```python
+@allure.step("Verify cart information in table")
+def verify_cart_information_in_table(self, product_name: str, price: str,
+                                     counter: str, total_price: str) -> None:
+    """Verify the checkout table row: name, price, quantity, and total."""
+    Verifications.verify_soft_assert_equals(self.get_table_product_name(), product_name, "product name")
+    Verifications.verify_soft_assert_equals(self.get_table_product_price(), price, "product price")
+    Verifications.verify_soft_assert_equals(self.get_table_product_quantity(), counter)   # message missing!
+    Verifications.verify_soft_assert_equals(self.get_table_total_price(), total_price, "total price")
+```
+
+Problems:
+- The `Verifications.verify_soft_assert_equals(...)` line is copy-pasted four times — only the
+  arguments change.
+- One check silently omits the message, giving a worse failure diagnostic.
+- Adding or reordering checks means duplicating another line.
+
+### ✅ Good — structured tuple list + single loop via `HelpersPage`
+
+```python
+from utilities.helpers_page import HelpersPage
+
+@allure.step("Verify cart information in table")
+def verify_cart_information_in_table(self, product_name: str, price: str,
+                                     counter: str, total_price: str) -> None:
+    """Verify the checkout table row: name, price, quantity, and total."""
+    HelpersPage.verify_all_soft_equals(
+        (self.get_table_product_name(), product_name, "product name"),
+        (self.get_table_product_price(), price, "product price"),
+        (self.get_table_product_quantity(), counter, "product quantity"),
+        (self.get_table_total_price(), total_price, "total price"),
+    )
+```
+
+**Rules:**
+- Each check is a 3-tuple: `(actual, expected, message)` — **message is always required**.
+- One tuple per line for readability; trailing comma on the last tuple.
+- The flow method still carries its `@allure.step` and docstring — `verify_all_soft_equals`
+  is a helper, not a replacement for the flow structure.
+- A lone `verify_contains` or a single `verify_soft_assert_equals` call doesn't need the
+  loop — only apply this pattern when two or more identical calls would otherwise repeat.

@@ -3,6 +3,7 @@ from playwright.sync_api import Page
 
 from extentions.ui_actions import UiActions
 from extentions.verifications import Verifications
+from utilities.helpers_page import HelpersPage
 
 
 class CheckOutPage:
@@ -30,7 +31,7 @@ class CheckOutPage:
         self.code_message = self.page.locator("[class='promoInfo']")
         self.code_input = self.page.locator("[class='promoCode']")
 
-    # =================== ATOMIC ACTIONS ===================
+    # =================== ACTIONS ===================
     # -- Table getters --
     def get_table_product_name(self) -> str:
         return UiActions.get_text(self.table_product_name)
@@ -79,23 +80,29 @@ class CheckOutPage:
     def verify_cart_information_in_table(self, product_name: str, price: str,
                                          counter: str, total_price: str) -> None:
         """Verify the checkout table row: name, price, quantity, and total."""
-        Verifications.verify_soft_assert_equals(self.get_table_product_name(), product_name, "product name")
-        Verifications.verify_soft_assert_equals(self.get_table_product_price(), price, "product price")
-        Verifications.verify_soft_assert_equals(self.get_table_product_quantity(), counter)
-        Verifications.verify_soft_assert_equals(self.get_table_total_price(), total_price, "total price")
+        HelpersPage.verify_all_soft_equals(
+            (self.get_table_product_name(), product_name, "product name"),
+            (self.get_table_product_price(), price, "product price"),
+            (self.get_table_product_quantity(), counter, "product quantity"),
+            (self.get_table_total_price(), total_price, "total price"),
+        )
 
     @allure.step("Verify cart information in table inside checkout page - Middle page")
     def verify_cart_information_in_table_middle_page(self, total_price: str, discount_perc: str) -> None:
         """Verify the checkout summary panel: total amount, discount, and net total."""
-        Verifications.verify_soft_assert_equals(self.get_total_amount(), total_price, "total amount")
-        Verifications.verify_soft_assert_equals(self.get_discount_percentage(), discount_perc, "discount percentage")
-        Verifications.verify_soft_assert_equals(self.get_total_after_discount(), total_price, "total after discount")
+        HelpersPage.verify_all_soft_equals(
+            (self.get_total_amount(), total_price, "total amount"),
+            (self.get_discount_percentage(), discount_perc, "discount percentage"),
+            (self.get_total_after_discount(), total_price, "total after discount"),
+        )
 
     @allure.step("Verify purchase flow with correct promo code")
     def verify_purchase_flow_with_correct_promo_code(self, promo_code_message: str, total_amount: str,
                                                      discount: str, total_after_discount: str) -> None:
         """Verify the promo-code message, totals, and discount on the checkout page."""
-        Verifications.verify_soft_assert_equals(self.get_promo_code_message(), promo_code_message, "promo code message")
-        Verifications.verify_soft_assert_equals(self.get_total_amount(), total_amount, "total amount")
-        Verifications.verify_soft_assert_equals(self.get_discount_percentage(), discount, "discount percentage")
-        Verifications.verify_soft_assert_equals(self.get_total_after_discount(), total_after_discount, "total after discount")
+        HelpersPage.verify_all_soft_equals(
+            (self.get_promo_code_message(), promo_code_message, "promo code message"),
+            (self.get_total_amount(), total_amount, "total amount"),
+            (self.get_discount_percentage(), discount, "discount percentage"),
+            (self.get_total_after_discount(), total_after_discount, "total after discount"),
+        )

@@ -4,6 +4,7 @@ from playwright.sync_api import Page
 from extentions.ui_actions import UiActions
 from extentions.verifications import Verifications
 from utilities.common_ops import calculate_total_price, split_string
+from utilities.helpers_page import HelpersPage
 
 
 class ProductsPage:
@@ -38,7 +39,7 @@ class ProductsPage:
         self.quantity = self.page.locator("[class='cart-item'] [class='quantity']")
         self.proceed_to_checkout = self.page.locator("text=PROCEED TO CHECKOUT")
 
-    # =================== ATOMIC ACTIONS ===================
+    # =================== ACTIONS ===================
     # -- Product card --
     def locate_product(self, product_name: str) -> None:
         """Store the product card locator matching the given product name."""
@@ -133,34 +134,44 @@ class ProductsPage:
     @allure.step("Verify initial amount in header display")
     def verify_initial_amount_in_header_display(self, initial_items_amount: str, initial_price: str) -> None:
         """Verify the header shows the expected initial item count and price."""
-        Verifications.verify_soft_assert_equals(self.get_header_item_count(), initial_items_amount)
-        Verifications.verify_soft_assert_equals(self.get_header_total_price(), initial_price)
+        HelpersPage.verify_all_soft_equals(
+            (self.get_header_item_count(), initial_items_amount, "initial item count"),
+            (self.get_header_total_price(), initial_price, "initial total price"),
+        )
 
     @allure.step("Verify cart information in top header display")
     def verify_cart_information_in_header_display(self, expected_items_counter: str, expected_price: str) -> None:
         """Verify the header item count and price after adding a product."""
-        Verifications.verify_soft_assert_equals(self.get_header_item_count(), expected_items_counter, "num of items")
-        Verifications.verify_soft_assert_equals(self.get_product_price(), expected_price, "price")
-        Verifications.verify_soft_assert_equals(self.get_header_total_price(), expected_price, "price header")
+        HelpersPage.verify_all_soft_equals(
+            (self.get_header_item_count(), expected_items_counter, "num of items"),
+            (self.get_product_price(), expected_price, "price"),
+            (self.get_header_total_price(), expected_price, "price header"),
+        )
 
     @allure.step("Verify no results products")
     def verify_no_results_products_display(self, text: str, no_results_large: str, no_results_small: str) -> None:
         """Search for a term that yields no products and verify the empty-state messages."""
         self.fill_search_box(text)
-        Verifications.verify_soft_assert_equals(no_results_large, self.get_no_results_heading())
-        Verifications.verify_soft_assert_equals(no_results_small, self.get_no_results_description())
+        HelpersPage.verify_all_soft_equals(
+            (self.get_no_results_heading(), no_results_large, "no results heading"),
+            (self.get_no_results_description(), no_results_small, "no results description"),
+        )
 
     def _verify_cart_product_names(self, product_one: str, product_two: str) -> None:
         """Verify the two product names shown in the cart."""
-        Verifications.verify_soft_assert_equals(self.get_cart_product_name(0), product_one, "product 1")
-        Verifications.verify_soft_assert_equals(self.get_cart_product_name(1), product_two, "product 2")
+        HelpersPage.verify_all_soft_equals(
+            (self.get_cart_product_name(0), product_one, "product 1 name"),
+            (self.get_cart_product_name(1), product_two, "product 2 name"),
+        )
 
     def _verify_cart_prices(self, price_product_one: int, price_product_two: int) -> tuple[int, int]:
         """Verify the two unit prices in the cart and return the actual values."""
         actual_price_one = int(self.get_cart_product_price(0))
         actual_price_two = int(self.get_cart_product_price(1))
-        Verifications.verify_soft_assert_equals(actual_price_one, price_product_one, "price product 1")
-        Verifications.verify_soft_assert_equals(actual_price_two, price_product_two, "price product 2")
+        HelpersPage.verify_all_soft_equals(
+            (actual_price_one, price_product_one, "price product 1"),
+            (actual_price_two, price_product_two, "price product 2"),
+        )
         return actual_price_one, actual_price_two
 
     def _verify_cart_totals(self, actual_price_one: int, actual_price_two: int,
@@ -170,8 +181,10 @@ class ProductsPage:
         actual_quantity_two = split_string(self.get_cart_quantity(1))
         total_for_one = calculate_total_price(actual_quantity_one, actual_price_one)
         total_for_two = calculate_total_price(actual_quantity_two, actual_price_two)
-        Verifications.verify_soft_assert_equals(total_for_one, expected_total_for_one_product, "total price")
-        Verifications.verify_soft_assert_equals(total_for_two, expected_total_for_two_products, "total price")
+        HelpersPage.verify_all_soft_equals(
+            (total_for_one, expected_total_for_one_product, "total price product 1"),
+            (total_for_two, expected_total_for_two_products, "total price product 2"),
+        )
 
     @allure.step("Verify cart information in cart panel")
     def verify_cart_information_in_cart(self, product_one: str, product_two: str,

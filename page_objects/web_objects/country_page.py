@@ -17,7 +17,7 @@ class CountryPage:
         self.proceed_button = self.page.locator("text=Proceed")
         self.success_message = self.page.locator("[class='products'] span").first
 
-    # =================== ATOMIC ACTIONS ===================
+    # =================== ACTIONS ===================
     def select_shipping_country(self, country: str) -> None:
         UiActions.select_option(self.select_country, country)
 

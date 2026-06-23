@@ -104,8 +104,9 @@ The high-level method then composes them into a readable, self-documenting flow.
 - Use Playwright's **`expect`** (web-first, auto-retrying) for anything UI-state related, not bare `assert` on a value read once.
 - Assert on user-visible state (`to_be_visible`, `to_have_text`, `to_have_value`, `to_be_enabled`) rather than implementation details.
 - Give failing assertions context — assert on a specific, named locator so the failure message points at the right element.
+- **DRY verification — never repeat `Verifications.verify_soft_assert_equals(...)` line-by-line.** When two or more soft-assert checks share the same pattern, build a list of `(actual, expected, message)` 3-tuples and pass them to `HelpersPage.verify_all_soft_equals(...)` from `utilities/helpers_page.py`. Message is **always required** — no 2-tuples.
 
-*(See `references/reference_examples_automation_standards.md` section 6 for assertion examples.)*
+*(See `references/reference_examples_automation_standards.md` section 6 for assertion examples and section 10 for the data-driven verification pattern.)*
 
 ## 7. Test Data & Configuration
 
@@ -128,6 +129,7 @@ Before completing ANY Playwright automation change, verify:
 - [ ] Large flows are decomposed into atomic action methods; names replace comments (section 3)
 - [ ] No manual sleeps or `wait_for_timeout` for sync — auto-waiting and `expect` used instead (section 5)
 - [ ] UI state checked with web-first `expect(locator)` assertions, not one-shot `assert` (section 6)
+- [ ] Repeated soft-assert checks use `HelpersPage.verify_all_soft_equals` with uniform `(actual, expected, message)` 3-tuples — no stacked `verify_soft_assert_equals` calls (section 6)
 - [ ] Test data is structured/typed; `base_url`, creds, and timeouts come from config, not literals (section 7)
 - [ ] All applicable `python_standards` rules also pass
 
