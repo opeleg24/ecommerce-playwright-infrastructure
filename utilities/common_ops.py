@@ -2,49 +2,38 @@ import json
 import time
 import xml.etree.ElementTree as ET
 
+CONFIG_FILE_PATH = "./configuration/data.xml"
 
-def get_time_stamp():
+
+def get_time_stamp() -> float:
+    """Return the current Unix timestamp in seconds."""
     return time.time()
 
-####################################################################################################################
-# Function Name:get_data
-# Function Description: This function is used to get data from data.xml file
-# Function Parameters: node_name
-# Function Return: String - node value
-####################################################################################################################
-def get_data(node_name):
-    # jenkins
-    #root = ET.parse("../configuration/data.xml").getroot()
-    # pytest
-    root = ET.parse("./configuration/data.xml").getroot()
-    return root.find('.//' + node_name).text
 
-####################################################################################################################
-# Function Name: read_json_file
-# Function Description: This function is used to read json file
-# Function Parameters: file_path
-# Function Return: json file
-####################################################################################################################
-def read_json_file(file_path):
-    with open(file_path, 'r') as file:
-        return json.load(file)
+def get_data(node_name: str) -> str:
+    """Return the text value of a node from the configuration XML file.
 
-####################################################################################################################
-# Function Name: calculate_total_price
-# Function Description: This function is used to calculate the total price
-# Function Parameters: quantity, price
-# Function Return: int - total price
-####################################################################################################################
-def calculate_total_price(quantity: int, price: int):
-    total = quantity * price
-    return total
+    Raises ValueError when the requested node is not present.
+    """
+    root = ET.parse(CONFIG_FILE_PATH).getroot()
+    node = root.find(f'.//{node_name}')
+    if node is None:
+        raise ValueError(f"Config node not found: node_name={node_name}")
+    return node.text
 
-####################################################################################################################
-# Function Name: split_string
-# Function Description: This function is used to split a string and return the first part as int
-# Function Parameters: text
-# Function Return: int - first part of the split string
-####################################################################################################################
-def split_string(text: str):
+
+def read_json_file(file_path: str) -> dict:
+    """Read and parse a JSON file, returning its decoded contents."""
+    with open(file_path, 'r') as json_file:
+        return json.load(json_file)
+
+
+def calculate_total_price(quantity: int, price: int) -> int:
+    """Return the total price for the given quantity at the given unit price."""
+    return quantity * price
+
+
+def split_string(text: str) -> int:
+    """Split on whitespace and return the first segment parsed as an int."""
     text_split = text.split(" ")
     return int(text_split[0])

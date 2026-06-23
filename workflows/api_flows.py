@@ -3,16 +3,22 @@ import utilities.base as base
 
 
 class APIFlows:
+    """Business-level API flows built on top of the raw API actions."""
 
     @staticmethod
-    def get_first_product():
+    def _fetch_products() -> list[dict]:
+        """Fetch the products list from the API and return the decoded JSON."""
         response = APIActions.get(base.request_context)
-        response_json = response.json()
-        name = response_json[0]['name']
-        return name
+        return response.json()
 
     @staticmethod
-    def get_amount_of_items():
-        response = APIActions.get(base.request_context)
-        response_json = response.json()
-        return len(response_json)
+    def get_first_product() -> str:
+        """Return the name of the first product in the API response."""
+        products = APIFlows._fetch_products()
+        return products[0]['name']
+
+    @staticmethod
+    def get_amount_of_items() -> int:
+        """Return the number of products in the API response."""
+        products = APIFlows._fetch_products()
+        return len(products)

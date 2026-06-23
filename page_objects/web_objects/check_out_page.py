@@ -2,6 +2,8 @@ from playwright.sync_api import Page
 
 
 class CheckOutPage:
+    """Page object for the checkout page table and order-summary panel."""
+
     def __init__(self, page: Page):
         # Table
         self.table_product_name = page.locator("tbody tr td [class='product-name']")

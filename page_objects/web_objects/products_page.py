@@ -1,11 +1,12 @@
-import pytest
-from playwright.sync_api import Page
 import allure
+from playwright.sync_api import Locator, Page
 
 from extentions.ui_actions import UiActions
 
 
 class ProductsPage:
+    """Page object for the products listing, header cart indicator, and cart panel."""
+
     def __init__(self, page: Page):
         self.page = page
         self.product = None
@@ -24,30 +25,37 @@ class ProductsPage:
         self.proceed_to_checkout = self.page.locator("text=PROCEED TO CHECKOUT")
         self.page_footer = self.page.locator("footer")
 
-    def locate_product(self, product_name):
+    def locate_product(self, product_name: str) -> None:
+        """Store the product card locator matching the given product name."""
         self.product = self.page.locator(f"//*[contains(text(), '{product_name}')]")
 
-    def add_to_cart_button(self):
+    def add_to_cart_button(self) -> Locator:
+        """Return the add-to-cart button for the currently located product."""
         return self.product.locator("//../div[3]/button")
 
-    def get_price_product(self):
+    def get_price_product(self) -> Locator:
+        """Return the price element for the currently located product."""
         return self.product.locator("//../p").nth(2)
-        
-    def get_page_header_text(self,description):
 
+    def get_page_header_text(self) -> str:
+        """Return the page header (brand logo) text."""
         return self.page_header.text_content()
 
-    def increment_action_decrease(self):
+    def increment_action_decrease(self) -> Locator:
+        """Return the decrease-quantity control for the currently located product."""
         return self.product.locator("//../div[2]/a[1]")
 
-    def increment_action_increase(self):
+    def increment_action_increase(self) -> Locator:
+        """Return the increase-quantity control for the currently located product."""
         return self.product.locator("//../div[2]/a[2]")
 
     @allure.step("Fill search box with text")
-    def fill_search_box(self, text):
+    def fill_search_box(self, text: str) -> None:
+        """Type the given text into the product search box."""
         self.search_box.fill(text)
 
     @allure.step("Proceed to checkout page")
-    def proceed_to_checkout_flow(self):
+    def proceed_to_checkout_flow(self) -> None:
+        """Open the cart and proceed to the checkout page."""
         UiActions.click(self.cart_icon)
         UiActions.click(self.proceed_to_checkout)

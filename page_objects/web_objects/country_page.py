@@ -2,6 +2,8 @@ from playwright.sync_api import Page
 
 
 class CountryPage:
+    """Page object for the final country-selection and order-confirmation page."""
+
     def __init__(self, page: Page):
         self.page = page
         self.select_country = self.page.locator("select")

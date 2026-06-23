@@ -5,7 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="claude code update #2">
+      <change beforePath="$PROJECT_DIR$/.claude/settings.local.json" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/settings.local.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/skills/python_standards/SKILL.md" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/skills/python_standards/SKILL.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/skills/python_standards/references/reference_examples_python_standards.md" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/skills/python_standards/references/reference_examples_python_standards.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extentions/api_actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/extentions/api_actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extentions/ui_actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/extentions/ui_actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extentions/verifications.py" beforeDir="false" afterPath="$PROJECT_DIR$/extentions/verifications.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page_objects/web_objects/check_out_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/page_objects/web_objects/check_out_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page_objects/web_objects/country_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/page_objects/web_objects/country_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page_objects/web_objects/products_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/page_objects/web_objects/products_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_cases/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_cases/conftest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_cases/test_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_cases/test_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_cases/test_web.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_cases/test_web.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trace.zip" beforeDir="false" afterPath="$PROJECT_DIR$/trace.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilities/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/utilities/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilities/common_ops.py" beforeDir="false" afterPath="$PROJECT_DIR$/utilities/common_ops.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workflows/api_flows.py" beforeDir="false" afterPath="$PROJECT_DIR$/workflows/api_flows.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workflows/web_flow.py" beforeDir="false" afterPath="$PROJECT_DIR$/workflows/web_flow.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,7 +32,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="windsurf-edits" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -28,12 +45,12 @@
     &quot;assignee&quot;: &quot;opeleg24&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/opeleg24/Playwright-Project.git&quot;,
-    &quot;accountId&quot;: &quot;62cb4e19-6cca-4954-9620-4b49b0d2ead8&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/opeleg24/playwright-project.git",
+    "accountId": "62cb4e19-6cca-4954-9620-4b49b0d2ead8"
   }
-}</component>
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/utilities/common_ops.py" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -57,7 +74,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "updates-playwright-project",
+    "git-widget-placeholder": "updates-refactor-project",
     "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "C:/Automation/Playwright-Project",
     "settings.editor.selected.configurable": "preferences.pluginManager",

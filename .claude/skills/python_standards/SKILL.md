@@ -4,7 +4,7 @@ description: >
   Enforce clean code standards, design patterns, and best practices for Python.
   Use this skill EVERY TIME you write, modify, create, or refactor any Python code.
   Trigger on ANY code change, new file creation, bug fix, or feature addition.
-  Covers naming, method design, comments/logging, type hints, Python idioms,
+  Covers naming, method design, comments, type hints, Python idioms,
   design patterns (DRY/KISS/YAGNI), and SOLID principles.
   This skill is the language-level coding constitution of this project.
   For UI/test-automation patterns, see the separate automation_standards skill.
@@ -46,7 +46,7 @@ For detailed bad/good comparisons and code examples, read `references/reference_
 
 *(See `references/reference_examples_python_standards.md` section 2 for method splitting examples.)*
 
-## 3. Comments & Logging
+## 3. Comments & Docstrings
 
 **Docstrings** — every method gets a docstring describing its purpose:
 - Format: `"""Fetch and validate the patient record, returning a normalized dict."""`
@@ -59,14 +59,11 @@ For detailed bad/good comparisons and code examples, read `references/reference_
 **Comments** — sparingly, only for WHY, never WHAT:
 - Format: `# Reason: <why>` or `# Workaround: <what and why>`
 
-**Logging** — generously and meaningfully:
-- `logger.info()` — key actions, major steps
-- `logger.debug()` — intermediate values, detailed state
-- `logger.warning()` — retries, fallbacks, handled edge cases
-- `logger.error()` — failures, exceptions
-- Always include context: `f"Processing record: record_id={record_id}"`
+**No logging** — do not add a `logging` logger or `logger.*` calls. This project does not
+use the `logging` module; run/step visibility is provided by **Allure** reporting
+(`@allure.step`, see the automation_standards skill). Don't introduce loggers.
 
-*(See `references/reference_examples_python_standards.md` sections 4–5 for logging and comment examples.)*
+*(See `references/reference_examples_python_standards.md` section 5 for comment examples.)*
 
 ## 4. Type Hints & Testability
 
@@ -116,7 +113,7 @@ Before completing ANY code change, verify:
 
 - [ ] All names are meaningful and follow naming conventions (section 1)
 - [ ] Every method does ONE thing and is ≤ ~20 lines (section 2)
-- [ ] Comments explain WHY, not WHAT. Logging covers key actions (section 3)
+- [ ] Comments explain WHY, not WHAT. No logging — Allure provides visibility (section 3)
 - [ ] Type hints present on all function signatures (section 4)
 - [ ] Context managers used for resources, specific exceptions caught, f-strings used (section 5)
 - [ ] No duplicate code — DRY violations extracted to shared methods (section 6)

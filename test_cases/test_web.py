@@ -12,18 +12,21 @@ class Test_Web:
     @allure.title("Test01: Verify page header and footer text")
     @allure.description("This test verifies that the page header and footer display the correct text")
     def test_verify_page_header(self):
+        """Verify the page header and footer display the expected text."""
         WebFlows.verify_page_header(get_data("PAGE_HEADER"))
         WebFlows.verify_page_footer(get_data("PAGE_FOOTER"))
 
     @allure.title("Test02: Verify initial amount of items & products in header display")
     @allure.description("This test verifies the initial amount of items & products in the header display")
     def test_verify_initial_header_amount(self):
+        """Verify the initial item count and price in the header display."""
         WebFlows.verify_initial_amount_in_header_display(get_data("COUNTER_INITIAL"),
                                                          get_data("COUNTER_INITIAL"))
 
     @allure.title("Test03 Add product to cart - verify amount in header display")
     @allure.description("This test adds a product to the cart and verifies the amount in the header display")
     def test_verify_add_product_to_cart(self):
+        """Add a product to the cart and verify the header display amount."""
         WebFlows.add_product_to_cart(get_data("PRODUCT"))
         WebFlows.click_cart_button()
         WebFlows.verify_cart_information_in_header_display(get_data("COUNTER_ONE_PRODUCT"),
@@ -35,6 +38,7 @@ class Test_Web:
         "This test adds a product to the cart and verifies the correct information in the cart: name of product,"
         "price display, and total amount")
     def test_verify_product_info_in_cart(self):
+        """Add two products and verify their names, prices, and totals in the cart."""
         WebFlows.add_product_to_cart(get_data("PRODUCT_ONE"))
         WebFlows.add_two_products_to_cart(get_data("PRODUCT_TWO"))
         WebFlows.click_cart_button()
@@ -49,6 +53,7 @@ class Test_Web:
     @allure.description(
         "This test adds a product to the cart and verifies the correct information in the checkout page")
     def test_verify_checkout_page(self):
+        """Add a product and verify its information on the checkout page."""
         WebFlows.add_product_to_cart(get_data("PRODUCT_NAME_CHECK_OUT"))
         WebFlows.proceed_to_checkout_page_flow()
         WebFlows.verify_cart_information_in_table(get_data("PRODUCT_NAME_CHECK_OUT"),
@@ -64,6 +69,7 @@ class Test_Web:
     @allure.description(
         "This test adds a product to the cart and verifies the promo code is correct & affects the total price")
     def test_verify_promo_code(self):
+        """Verify a correct promo code is accepted and adjusts the total price."""
         WebFlows.add_product_to_cart(get_data("PRODUCT_NAME_CHECK_OUT_CODE"))
         WebFlows.proceed_to_checkout_page_flow()
         WebFlows.apply_promo_code(get_data("CORRECT_PROMO_CODE"))
@@ -78,6 +84,7 @@ class Test_Web:
         "This test adds a product to the cart and verifies the promo code is not correct & doesn't"
         "affects the total price")
     def test_verify_incorrect_promo_code(self):
+        """Verify an incorrect promo code is rejected and leaves the total unchanged."""
         WebFlows.add_product_to_cart(get_data("PRODUCT_NAME_CHECK_OUT_CODE"))
         WebFlows.proceed_to_checkout_page_flow()
         WebFlows.apply_promo_code(get_data("INCORRECT_PROMO_CODE"))
@@ -91,6 +98,7 @@ class Test_Web:
     @allure.description(
         "This test adds a product to the cart and verifies the complete purchase flow")
     def test_verify_purchase_flow(self):
+        """Verify the full purchase flow completes with a success message."""
         WebFlows.add_product_to_cart(get_data("PRODUCT"))
         WebFlows.proceed_to_country_page_flow()
         WebFlows.filling_country_page_information_flow(get_data("COUNTRY"))
@@ -99,7 +107,8 @@ class Test_Web:
     @pytest.mark.usefixtures("main_page")
     @allure.title("Test09: Verify no results products")
     @allure.description("This test verifies that once there are no results products, the correct message is displayed")
-    def test08_verify_no_results_in_search(self):
+    def test_verify_no_results_in_search(self):
+        """Verify the empty-state messages appear when a search yields no products."""
         WebFlows.verify_no_results_products_display(get_data("SEARCH_INPUT"),
                                                     get_data("NO_RESULTS_LARGE"),
                                                     get_data("NO_RESULTS_SMALL"))

@@ -10,7 +10,7 @@ Read the relevant section when you need concrete guidance on how to apply a rule
 1. [DRY Patterns](#1-dry-patterns)
 2. [Single Responsibility — Method Splitting](#2-single-responsibility--method-splitting)
 3. [Naming — Bad vs Good](#3-naming--bad-vs-good)
-4. [Logging — Bad vs Good](#4-logging--bad-vs-good)
+4. [Logging — Not Used in This Project](#4-logging--not-used-in-this-project)
 5. [Comments — Bad vs Good](#5-comments--bad-vs-good)
 6. [Readability Patterns](#6-readability-patterns)
 7. [Type Hints — Bad vs Good](#7-type-hints--bad-vs-good)
@@ -62,8 +62,7 @@ for actual, expected in zip(actual_values, expected_values):
 
 # ✅ Good — enumerate when you need the index
 for index, record in enumerate(patient_records):
-    logger.info(f"Verifying record {index}: id={record['id']}")
-    assert record['is_active']
+    assert record['is_active'], f"Inactive record at position {index}: id={record['id']}"
 ```
 
 ### 1.3 Extract repeated logic into helpers
@@ -192,21 +191,14 @@ def build_discharge_summary(visit: Visit) -> str:
 
 ---
 
-## 4. Logging — Bad vs Good
+## 4. Logging — Not Used in This Project
 
-```python
-# ❌ Bad — no context, useless in production
-logger.info("done")
-logger.info(f"{data}")
-logger.error("error occurred")
-print("here")
+This project does **not** use the `logging` module. Do not add a `logger`, call
+`logger.info/debug/warning/error(...)`, or sprinkle `print()` statements for visibility.
 
-# ✅ Good — action + context in every log line
-logger.info(f"Processing record: record_id={record_id}")
-logger.debug(f"Fetched {len(records)} records from source: source={source_name}")
-logger.warning(f"Retry attempt {attempt}/{max_retries}: operation={operation_name}")
-logger.error(f"Failed to complete operation: error={str(e)}, context={context}")
-```
+Run- and step-level visibility is provided entirely by **Allure** reporting via
+`@allure.step` decorators (see the `automation_standards` skill). If you need a step to
+show up in a report, wrap it in an Allure step — not a log line.
 
 ---
 
