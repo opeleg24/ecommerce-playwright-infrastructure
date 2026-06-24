@@ -33,7 +33,7 @@ This skill targets **Playwright for Python, sync API**, with **pytest-playwright
 - One page object class per logical page or major component.
 - The page object receives an injected **`Page`** in its constructor — it never creates its own browser, context, or page. The `page` comes from the pytest-playwright `page` fixture.
 - Wrap each page object in its own pytest **fixture** so tests receive ready-to-use page objects, not raw `Page` plumbing.
-- Page objects expose **locators** (as `Locator` properties) and **actions/verifications** — they don't contain the test's business assertions about overall outcomes; those read clearly in the test using `expect`.
+- Page objects expose **locators** (as instance attributes in `__init__` under the SELECTORS banner) and **actions/verifications** — they don't contain the test's business assertions about overall outcomes; those read clearly in the test using `expect`.
 
 *(See `references/reference_examples_automation_standards.md` section 2 for injected-`Page` objects and section 8 for the fixture wiring.)*
 
@@ -83,7 +83,7 @@ The high-level method then composes them into a readable, self-documenting flow.
 ## 4. Locators
 
 - **Prefer user-facing locators** in this order: `get_by_role` → `get_by_label` → `get_by_placeholder` / `get_by_text` → `get_by_test_id`. Fall back to CSS only when nothing user-facing fits; avoid XPath and brittle structural chains.
-- Define locators as **`Locator` properties** on the page object (lazy, defined once), not as raw strings repeated inside methods.
+- Define locators as **`__init__` SELECTORS instance attributes** on the page object (grouped under the `# === SELECTORS ===` banner), not as raw strings repeated inside methods.
 - Lean on Playwright's **strictness** — a locator that matches multiple elements raises, which surfaces ambiguity early. Narrow with `.filter()`, `name=`, or `.nth()` deliberately.
 - Never build locators from volatile data (auto-generated ids, deep `div > div > div` paths).
 
@@ -188,7 +188,7 @@ Before completing ANY Playwright automation change, verify:
 - [ ] Page objects receive an injected `Page` (from the `page` fixture) — none create their own (section 1)
 - [ ] Each page object is exposed via its own pytest fixture; tests don't wire up raw `Page` (section 1)
 - [ ] Each page object is split into SELECTORS / ATOMIC ACTIONS / FLOWS sections with comment banners; flows use only that page's own atomic actions; cross-page flows live in the workflow layer (section 2)
-- [ ] Locators are `Locator` properties using `get_by_role`/`get_by_label`/`get_by_test_id`; no XPath or brittle CSS (section 4)
+- [ ] Locators are declared as `__init__` SELECTORS instance attributes (section 2), using user-facing `get_by_role`/`get_by_label`/`get_by_test_id` where possible; no XPath or brittle CSS (section 4)
 - [ ] Large flows are decomposed into atomic action methods; names replace comments (section 3)
 - [ ] No manual sleeps or `wait_for_timeout` for sync — auto-waiting and `expect` used instead (section 5)
 - [ ] UI state checked with web-first `expect(locator)` assertions, not one-shot `assert` (section 6)

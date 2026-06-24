@@ -74,36 +74,16 @@ class SurgeryFormPage:
     def __init__(self, page: Page):
         self.page = page
 
-    # --- Locators (defined once, lazy) ---
-    @property
-    def diagnosis_title(self) -> Locator:
-        return self.page.get_by_test_id("selected-diagnosis-title")
+        # =================== SELECTORS ===================
+        self.diagnosis_title = self.page.get_by_test_id("selected-diagnosis-title")
+        self.side_dropdown = self.page.get_by_label("צד")
+        self.surgical_method_dropdown = self.page.get_by_label("שיטה ניתוחית")
+        self.date_field = self.page.get_by_test_id("surgery-date")
+        self.gynecologist_checkbox = self.page.get_by_test_id("gynecolog-checkbox")
+        self.remarks_field = self.page.get_by_label("הערות")
+        self.save_button = self.page.get_by_role("button", name="שמור")
 
-    @property
-    def side_dropdown(self) -> Locator:
-        return self.page.get_by_label("צד")
-
-    @property
-    def surgical_method_dropdown(self) -> Locator:
-        return self.page.get_by_label("שיטה ניתוחית")
-
-    @property
-    def date_field(self) -> Locator:
-        return self.page.get_by_test_id("surgery-date")
-
-    @property
-    def gynecologist_checkbox(self) -> Locator:
-        return self.page.get_by_test_id("gynecolog-checkbox")
-
-    @property
-    def remarks_field(self) -> Locator:
-        return self.page.get_by_label("הערות")
-
-    @property
-    def save_button(self) -> Locator:
-        return self.page.get_by_role("button", name="שמור")
-
-    # --- Atomic action methods (reusable across create, edit, delete flows) ---
+    # =================== ATOMIC ACTIONS ===================
     def verify_diagnosis_name(self, expected_name: str):
         """Assert the selected-diagnosis title matches the expected full name."""
         expect(self.diagnosis_title).to_have_text(expected_name)
@@ -181,17 +161,10 @@ class LoginPage:
     def __init__(self, page: Page):
         self.page = page
 
-    @property
-    def email_input(self) -> Locator:
-        return self.page.get_by_label("Email")
-
-    @property
-    def password_input(self) -> Locator:
-        return self.page.get_by_label("Password")
-
-    @property
-    def sign_in_button(self) -> Locator:
-        return self.page.get_by_role("button", name="Sign in")
+        # =================== SELECTORS ===================
+        self.email_input = self.page.get_by_label("Email")
+        self.password_input = self.page.get_by_label("Password")
+        self.sign_in_button = self.page.get_by_role("button", name="Sign in")
 
     def navigate(self):
         """Open the login page (base_url comes from pytest config)."""
@@ -215,8 +188,9 @@ against it — no hardcoded host in the page object.
 
 ## 3. Locators — Resilient vs Brittle
 
-Prefer user-facing locators that survive DOM refactors. Define them as `Locator`
-properties, never as raw strings repeated inside methods.
+Prefer user-facing locators that survive DOM refactors. Declare them as instance
+attributes inside `__init__` under the `# === SELECTORS ===` banner, never as raw
+strings repeated inside methods.
 
 ```python
 # ❌ Bad — brittle, structure-coupled locators inlined in methods
@@ -226,21 +200,18 @@ def open_first_patient(self):
 ```
 
 ```python
-# ✅ Good — user-facing locators, declared once as properties
+# ✅ Good — user-facing locators, declared once as SELECTORS attributes
 class PatientListPage:
     def __init__(self, page: Page):
         self.page = page
 
-    @property
-    def search_input(self) -> Locator:
-        return self.page.get_by_role("searchbox", name="Search patients")
-
-    @property
-    def add_patient_button(self) -> Locator:
-        return self.page.get_by_role("button", name="Add patient")
+        # =================== SELECTORS ===================
+        self.search_input = self.page.get_by_role("searchbox", name="Search patients")
+        self.add_patient_button = self.page.get_by_role("button", name="Add patient")
 
     def patient_row(self, full_name: str) -> Locator:
         """Return the table row locator for a patient by visible name."""
+        # Dynamic locator — parameterised, so stays a method rather than a SELECTORS attribute
         return self.page.get_by_role("row", name=full_name)
 
     def open_patient(self, full_name: str):

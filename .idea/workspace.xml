@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Adding permissions that allow to edit plus updating skill automation comments" />
+    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Create a Cloud MD file">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -391,7 +393,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1782309500579</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL‎-00028" summary="Create a Cloud MD file">
+      <option name="closed" value="true" />
+      <created>1782309958890</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL‎-00028" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1782309958890</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -406,7 +416,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="pytest and jenkins&#10;plus adding verify header text" />
     <MESSAGE value="improve documenation" />
     <MESSAGE value="last commit" />
     <MESSAGE value="change to conftest.py" />
@@ -431,6 +440,7 @@
     <MESSAGE value="Data structure when passing to tests #1" />
     <MESSAGE value="Adding comments to flows" />
     <MESSAGE value="Adding permissions that allow to edit plus updating skill automation comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding permissions that allow to edit plus updating skill automation comments" />
+    <MESSAGE value="Create a Cloud MD file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create a Cloud MD file" />
   </component>
 </project>
