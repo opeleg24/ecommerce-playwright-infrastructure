@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Adding comments to flows">
-      <change beforePath="$PROJECT_DIR$/.claude/settings.local.json" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/settings.local.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.claude/skills/automation_standards/SKILL.md" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/skills/automation_standards/SKILL.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.claude/skills/automation_standards/references/reference_examples_automation_standards.md" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/skills/automation_standards/references/reference_examples_automation_standards.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Adding permissions that allow to edit plus updating skill automation comments" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -388,7 +383,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1782309073608</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL‎-00027" summary="Adding permissions that allow to edit plus updating skill automation comments">
+      <option name="closed" value="true" />
+      <created>1782309500579</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL‎-00027" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1782309500579</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -403,7 +406,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update project" />
     <MESSAGE value="pytest and jenkins&#10;plus adding verify header text" />
     <MESSAGE value="improve documenation" />
     <MESSAGE value="last commit" />
@@ -428,6 +430,7 @@
     <MESSAGE value="Data structure when passing to tests" />
     <MESSAGE value="Data structure when passing to tests #1" />
     <MESSAGE value="Adding comments to flows" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding comments to flows" />
+    <MESSAGE value="Adding permissions that allow to edit plus updating skill automation comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding permissions that allow to edit plus updating skill automation comments" />
   </component>
 </project>
