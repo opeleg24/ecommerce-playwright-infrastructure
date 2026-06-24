@@ -103,21 +103,29 @@ class ProductsPage:
     @allure.step("Add one product to cart")
     def add_product_to_cart(self, product_name: str) -> None:
         """Locate the product and add a single unit to the cart."""
+        # 1. Locate product
         self.locate_product(product_name)
+        # 2. Decrease quantity to one
         self.decrease_quantity()
+        # 3. Add to cart
         self.click_add_to_cart()
 
     @allure.step("Add two products to cart")
     def add_two_products_to_cart(self, product_name: str) -> None:
         """Locate the product and add two units to the cart."""
+        # 1. Locate product
         self.locate_product(product_name)
+        # 2. Increase quantity to two
         self.increase_quantity()
+        # 3. Add to cart
         self.click_add_to_cart()
 
     @allure.step("Proceed to checkout page")
     def proceed_to_checkout_flow(self) -> None:
         """Open the cart and proceed to the checkout page."""
+        # 1. Open cart
         self.open_cart()
+        # 2. Proceed to checkout
         self.click_proceed_to_checkout()
 
     # -- Verifications --
@@ -151,7 +159,9 @@ class ProductsPage:
     @allure.step("Verify no results products")
     def verify_no_results_products_display(self, text: str, no_results_large: str, no_results_small: str) -> None:
         """Search for a term that yields no products and verify the empty-state messages."""
+        # 1. Search for a term that yields no results
         self.fill_search_box(text)
+        # 2. Verify no-results heading and description
         HelpersPage.verify_all_soft_equals(
             (self.get_no_results_heading(), no_results_large, "no results heading"),
             (self.get_no_results_description(), no_results_small, "no results description"),
@@ -189,10 +199,14 @@ class ProductsPage:
     @allure.step("Verify cart information in cart panel")
     def verify_cart_information_in_cart(self, data: dict) -> None:
         """Open the cart and verify product names, unit prices, and line totals."""
+        # 1. Open cart
         self.open_cart()
+        # 2. Verify product names
         self._verify_cart_product_names(data["product_one"], data["product_two"])
+        # 3. Verify unit prices
         actual_price_one, actual_price_two = self._verify_cart_prices(
             data["product_one_price"], data["product_two_price"])
+        # 4. Verify line totals
         self._verify_cart_totals(actual_price_one, actual_price_two,
                                  data["expected_total_price_prod_one"],
                                  data["expected_total_price_prod_two"])

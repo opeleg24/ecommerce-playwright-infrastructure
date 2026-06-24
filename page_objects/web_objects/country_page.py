@@ -34,8 +34,11 @@ class CountryPage:
     @allure.step("Filling country page information")
     def filling_country_page_information_flow(self, country: str) -> None:
         """Select the country, accept terms, and proceed from the country page."""
+        # 1. Select shipping country
         self.select_shipping_country(country)
+        # 2. Accept terms and conditions
         self.accept_terms_and_conditions()
+        # 3. Click proceed
         self.click_proceed()
 
     @allure.step("Verify order successful message")

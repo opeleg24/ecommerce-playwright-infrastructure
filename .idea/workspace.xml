@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Data structure when passing to tests">
+    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Data structure when passing to tests #1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page_objects/web_objects/check_out_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/page_objects/web_objects/check_out_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page_objects/web_objects/country_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/page_objects/web_objects/country_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page_objects/web_objects/products_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/page_objects/web_objects/products_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workflows/web_flow.py" beforeDir="false" afterPath="$PROJECT_DIR$/workflows/web_flow.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -369,7 +373,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1782222128857</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL‎-00025" summary="Data structure when passing to tests #1">
+      <option name="closed" value="true" />
+      <created>1782223262251</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL‎-00025" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1782223262251</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -407,6 +419,7 @@
     <MESSAGE value="Re-factor of moving from XML data to JSON data file" />
     <MESSAGE value="Adding test structure of the test with comments and data" />
     <MESSAGE value="Data structure when passing to tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Data structure when passing to tests" />
+    <MESSAGE value="Data structure when passing to tests #1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Data structure when passing to tests #1" />
   </component>
 </project>

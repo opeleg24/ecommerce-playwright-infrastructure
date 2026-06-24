@@ -9,5 +9,7 @@ class WebFlows:
     @allure.step("Proceed to final country page")
     def proceed_to_country_page_flow() -> None:
         """Proceed through checkout to the final country page."""
+        # 1. Proceed to checkout
         base.products_page.proceed_to_checkout_flow()
+        # 2. Click place order
         base.check_out_page.click_place_order()

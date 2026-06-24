@@ -73,7 +73,9 @@ class CheckOutPage:
     @allure.step("Enter promo code")
     def apply_promo_code(self, code: str) -> None:
         """Enter a promo code and apply it."""
+        # 1. Enter promo code
         self.enter_promo_code(code)
+        # 2. Click apply
         self.click_apply_promo()
 
     @allure.step("Verify cart information in table inside checkout page")
