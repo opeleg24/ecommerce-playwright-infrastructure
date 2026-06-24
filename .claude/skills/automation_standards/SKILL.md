@@ -116,7 +116,7 @@ The high-level method then composes them into a readable, self-documenting flow.
 
 *(See `references/reference_examples_automation_standards.md` section 7 for dataclass test-data patterns and section 8 for config/fixtures.)*
 
-## 8. Test Body Structure (Test Data → Numbered Steps)
+## 8. Test Body Structure (Test Data → Numbered Steps) + Flow Methods
 
 Every test method body follows a two-part layout:
 
@@ -150,6 +150,35 @@ def test_verify_add_product_to_cart(self, test_data):
 
 *(See `references/reference_examples_automation_standards.md` section 11 for the full bad/good comparison.)*
 
+### Flow methods — numbered steps only (no `# Test Data` block)
+
+The same `# N. <description>` convention applies to every **multi-step FLOW method** in page objects and the workflow layer. Flow methods don't use a `# Test Data` block — they start directly with `# 1.`. Single-call methods (one atomic action or one verification call) need no step comments.
+
+```python
+# ❌ Bad — multi-step flow with no step labels
+@allure.step("Filling country page information")
+def filling_country_page_information_flow(self, country: str) -> None:
+    """Select the country, accept terms, and proceed from the country page."""
+    self.select_shipping_country(country)
+    self.accept_terms_and_conditions()
+    self.click_proceed()
+
+# ✅ Good — same flow with numbered step comments
+@allure.step("Filling country page information")
+def filling_country_page_information_flow(self, country: str) -> None:
+    """Select the country, accept terms, and proceed from the country page."""
+    # 1. Select shipping country
+    self.select_shipping_country(country)
+    # 2. Accept terms and conditions
+    self.accept_terms_and_conditions()
+    # 3. Click proceed
+    self.click_proceed()
+```
+
+This applies equally to workflow-layer flows (e.g. `WebFlows`) and to verify-style flows that call multiple helper methods.
+
+*(See `references/reference_examples_automation_standards.md` section 11 for bad/good comparisons covering both test bodies and flow methods.)*
+
 ---
 
 ## 9. Automation Review Checklist
@@ -165,7 +194,7 @@ Before completing ANY Playwright automation change, verify:
 - [ ] UI state checked with web-first `expect(locator)` assertions, not one-shot `assert` (section 6)
 - [ ] Repeated soft-assert checks use `HelpersPage.verify_all_soft_equals` with uniform `(actual, expected, message)` 3-tuples — no stacked `verify_soft_assert_equals` calls (section 6)
 - [ ] Test data is structured/typed; `base_url`, creds, and timeouts come from config, not literals (section 7)
-- [ ] Each test body opens with a `# Test Data` block and numbers each action step with `# N. <Action name>` comments (section 8)
+- [ ] Each test body opens with a `# Test Data` block and numbers each action step with `# N. <Action name>` comments; every multi-step FLOW method (page objects and workflow layer) also uses numbered step comments without a `# Test Data` block (section 8)
 - [ ] All applicable `python_standards` rules also pass
 
 If any rule is violated, fix it before presenting the code.

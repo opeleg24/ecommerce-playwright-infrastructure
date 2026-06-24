@@ -28,6 +28,7 @@ their own fixtures (see section 8), never raw browser plumbing.
 9. [Page Object Internal Structure (SELECTORS → ATOMIC ACTIONS → FLOWS)](#9-page-object-internal-structure-selectors--atomic-actions--flows)
 10. [Data-Driven Verification — Loop Over Checks](#10-data-driven-verification--loop-over-checks)
 11. [Test Body Structure — Test Data Block + Numbered Steps](#11-test-body-structure--test-data-block--numbered-steps)
+12. [Flow Method Numbered Steps](#12-flow-method-numbered-steps)
 
 ---
 
@@ -832,3 +833,77 @@ base.check_out_page.verify_purchase_flow_with_correct_promo_code(test_data["unsu
 |---|---|
 | Method called by one test; all fields from that test's data | **A — Introduce Parameter Object** (`data: dict`) |
 | Method shared by multiple tests with different data key names | **B — Inline** (`test_data["key"]` at call site) |
+
+---
+
+## 12. Flow Method Numbered Steps
+
+Every multi-step FLOW method in a page object or the workflow layer gets `# N. <description>`
+comments — one directly above each call. No `# Test Data` block (flows don't receive
+`test_data`). Single-call methods (one atomic action or one `verify_all_soft_equals(...)`)
+need no step comments.
+
+### ❌ Bad — multi-step flow with no step labels
+
+```python
+@allure.step("Filling country page information")
+def filling_country_page_information_flow(self, country: str) -> None:
+    """Select the country, accept terms, and proceed from the country page."""
+    self.select_shipping_country(country)
+    self.accept_terms_and_conditions()
+    self.click_proceed()
+```
+
+A reader has to read each call to understand the sequence. Harder to scan and debug.
+
+### ✅ Good — numbered steps, no `# Test Data` block
+
+```python
+@allure.step("Filling country page information")
+def filling_country_page_information_flow(self, country: str) -> None:
+    """Select the country, accept terms, and proceed from the country page."""
+    # 1. Select shipping country
+    self.select_shipping_country(country)
+    # 2. Accept terms and conditions
+    self.accept_terms_and_conditions()
+    # 3. Click proceed
+    self.click_proceed()
+```
+
+### ✅ Good — workflow-layer flow (cross-page)
+
+```python
+@staticmethod
+@allure.step("Proceed to final country page")
+def proceed_to_country_page_flow() -> None:
+    """Proceed through checkout to the final country page."""
+    # 1. Proceed to checkout
+    base.products_page.proceed_to_checkout_flow()
+    # 2. Click place order
+    base.check_out_page.click_place_order()
+```
+
+### ✅ Good — verify-style flow with multiple helper calls
+
+```python
+@allure.step("Verify cart information in cart panel")
+def verify_cart_information_in_cart(self, data: dict) -> None:
+    """Open the cart and verify product names, unit prices, and line totals."""
+    # 1. Open cart
+    self.open_cart()
+    # 2. Verify product names
+    self._verify_cart_product_names(data["product_one"], data["product_two"])
+    # 3. Verify unit prices
+    actual_price_one, actual_price_two = self._verify_cart_prices(
+        data["product_one_price"], data["product_two_price"])
+    # 4. Verify line totals
+    self._verify_cart_totals(actual_price_one, actual_price_two,
+                             data["expected_total_price_prod_one"],
+                             data["expected_total_price_prod_two"])
+```
+
+**Rules:**
+- Number starts at `1`, increments by 1 for each call in the method body.
+- Label is short and imperative: matches what the called method does (`open_cart` → `# 1. Open cart`).
+- No blank lines between the comment and the call it labels — they stay visually paired.
+- Single-call methods (atomic actions, single `verify_all_soft_equals`, fetch+return) need no step comments.

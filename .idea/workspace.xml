@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Data structure when passing to tests #1">
+    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Adding comments to flows">
+      <change beforePath="$PROJECT_DIR$/.claude/settings.local.json" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/settings.local.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/skills/automation_standards/SKILL.md" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/skills/automation_standards/SKILL.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/skills/automation_standards/references/reference_examples_automation_standards.md" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/skills/automation_standards/references/reference_examples_automation_standards.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/page_objects/web_objects/check_out_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/page_objects/web_objects/check_out_page.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/page_objects/web_objects/country_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/page_objects/web_objects/country_page.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/page_objects/web_objects/products_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/page_objects/web_objects/products_page.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workflows/web_flow.py" beforeDir="false" afterPath="$PROJECT_DIR$/workflows/web_flow.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -381,7 +380,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1782223262251</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL‎-00026" summary="Adding comments to flows">
+      <option name="closed" value="true" />
+      <created>1782309073608</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL‎-00026" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1782309073608</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -420,6 +427,7 @@
     <MESSAGE value="Adding test structure of the test with comments and data" />
     <MESSAGE value="Data structure when passing to tests" />
     <MESSAGE value="Data structure when passing to tests #1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Data structure when passing to tests #1" />
+    <MESSAGE value="Adding comments to flows" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding comments to flows" />
   </component>
 </project>
