@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="modifying automation file">
+    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="updates page #1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page_objects/web_objects/products_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/page_objects/web_objects/products_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trace.zip" beforeDir="false" afterPath="$PROJECT_DIR$/trace.zip" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,12 +30,12 @@
     &quot;assignee&quot;: &quot;opeleg24&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/opeleg24/playwright-project.git",
-    "accountId": "62cb4e19-6cca-4954-9620-4b49b0d2ead8"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/opeleg24/playwright-project.git&quot;,
+    &quot;accountId&quot;: &quot;62cb4e19-6cca-4954-9620-4b49b0d2ead8&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/utilities/common_ops.py" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -58,6 +60,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "updates-refactor-project",
     "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "C:/Automation/Playwright-Project",
@@ -164,7 +168,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-d9fa9deec7cb-d902c0275401-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-252.23892.515" />
+        <option value="bundled-python-sdk-c59985aa861c-c2ffad84badb-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-261.24374.152" />
       </set>
     </attachedChunks>
   </component>
@@ -409,8 +413,19 @@
       <option name="project" value="LOCAL‎" />
       <updated>1782311310633</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL‎-00030" summary="updates page #1">
+      <option name="closed" value="true" />
+      <created>1782312209688</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL‎-00030" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1782312209688</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -424,7 +439,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="last commit" />
     <MESSAGE value="change to conftest.py" />
     <MESSAGE value="adding requirements.txt" />
     <MESSAGE value="Add footer test and migration state files" />
@@ -449,6 +463,7 @@
     <MESSAGE value="Adding permissions that allow to edit plus updating skill automation comments" />
     <MESSAGE value="Create a Cloud MD file" />
     <MESSAGE value="modifying automation file" />
-    <option name="LAST_COMMIT_MESSAGE" value="modifying automation file" />
+    <MESSAGE value="updates page #1" />
+    <option name="LAST_COMMIT_MESSAGE" value="updates page #1" />
   </component>
 </project>

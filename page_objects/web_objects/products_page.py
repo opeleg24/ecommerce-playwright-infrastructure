@@ -1,5 +1,5 @@
 import allure
-from playwright.sync_api import Page
+from playwright.sync_api import Locator, Page
 
 from extentions.ui_actions import UiActions
 from extentions.verifications import Verifications
@@ -20,16 +20,11 @@ class ProductsPage:
 
         # -- Product card (dynamic; set by locate_product) --
         self.product = None
-
         # -- Search --
         self.search_box = self.page.locator("input[type='search']")
-        self.no_results_large_message = self.page.locator("[class='no-results'] h2")
-        self.no_results_small_message = self.page.locator("[class='no-results'] p")
         self.no_results_image = self.page.locator("[class='no-results'] img")
 
         # -- Cart indicator (header) --
-        self.items_indicator_header = self.page.locator("[class='cart-info'] tr:first-child strong")
-        self.price_indicator_header = self.page.locator("[class='cart-info'] tr:last-child strong")
         self.cart_icon = self.page.locator("[class='cart-icon']")
 
         # -- Cart panel --
@@ -39,7 +34,17 @@ class ProductsPage:
         self.quantity = self.page.locator("[class='cart-item'] [class='quantity']")
         self.proceed_to_checkout = self.page.locator("text=PROCEED TO CHECKOUT")
 
+    # =================== SELECTORS HELPERS ===================
+    def _get_no_results_locator(self, tag: str) -> Locator:
+        """Build a locator for an element inside the no-results empty-state block."""
+        return self.page.locator(f"[class='no-results'] {tag}")
+
+    def _get_cart_info_locator(self, row: str) -> Locator:
+        """Build a locator for a strong cell inside the cart-info summary table."""
+        return self.page.locator(f"[class='cart-info'] {row} strong")
+
     # =================== ACTIONS ===================
+
     # -- Product card --
     def locate_product(self, product_name: str) -> None:
         """Store the product card locator matching the given product name."""
@@ -70,17 +75,16 @@ class ProductsPage:
         UiActions.update_text(self.search_box, text)
 
     def get_no_results_heading(self) -> str:
-        return UiActions.get_text(self.no_results_large_message)
+        return UiActions.get_text(self._get_no_results_locator('h2'))
 
     def get_no_results_description(self) -> str:
-        return UiActions.get_text(self.no_results_small_message)
-
+        return UiActions.get_text(self._get_no_results_locator('p'))
     # -- Cart indicator (header) --
     def get_header_item_count(self) -> str:
-        return UiActions.get_text(self.items_indicator_header)
+        return UiActions.get_text(self._get_cart_info_locator("tr:first-child"))
 
     def get_header_total_price(self) -> str:
-        return UiActions.get_text(self.price_indicator_header)
+        return UiActions.get_text(self._get_cart_info_locator("tr:last-child"))
 
     # -- Cart panel --
     def open_cart(self) -> None:
