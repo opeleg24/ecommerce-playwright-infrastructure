@@ -1,4 +1,10 @@
-# CLAUDE.md — Playwright Python Test Automation Project
+# CLAUDE.md — E-Commerce Playwright Infrastructure
+
+## CI/CD
+
+This project is integrated with **Jenkins**. The pipeline is configured directly in the Jenkins UI — there is no Jenkinsfile in the repository. On every run the pipeline executes the pytest test suite and generates the Allure report.
+
+---
 
 ## Running Tests
 
@@ -22,7 +28,6 @@ pip install -r requirements.txt
 playwright install
 ```
 
-> **Note:** `smart_assertions` is used in code (soft-assert support) but is **not** listed in `requirements.txt`. Install it manually: `pip install smart-assertions`.
 
 ---
 
@@ -141,7 +146,7 @@ Two enforced skills define the coding constitution for this project. **Always in
 ## Gotchas
 
 - **`extentions/`** — the directory and all imports use this misspelling. Match it exactly.
-- **`smart_assertions`** — imported throughout but absent from `requirements.txt`.
+- **`smart_assertions`** — imported throughout; pinned as `smart-assertions==1.0.2` in `requirements.txt`.
 - **Existing locators** — current page objects use CSS/XPath selectors (`.locator("[class='...']")`). The `automation_standards` skill prefers user-facing locators; use those for new code.
 - **Shared state** — module-level globals in `utilities/base.py` (`base.page`, `base.products_page`, etc.) are the standard access pattern in tests and workflows.
 - **Sync API** — this project uses `playwright.sync_api`, not the async variant.

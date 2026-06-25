@@ -1,4 +1,4 @@
-# Playwright Python — QA Automation Framework
+# E-Commerce Playwright Infrastructure
 
 A scalable QA automation infrastructure for Web UI and REST API testing, implemented with **Python** and **Playwright**. It uses a layered Page Object Model to separate test logic from page interactions, keeping the suite maintainable, reusable, and easy to extend.
 
@@ -12,14 +12,21 @@ A scalable QA automation infrastructure for Web UI and REST API testing, impleme
 
 ## Table of Contents
 
-1. [Features](#features)
-2. [Tech Stack](#tech-stack)
-3. [Key Engineering Highlights](#key-engineering-highlights)
-4. [Project Structure](#project-structure)
-5. [Architecture Deep-Dive](#architecture-deep-dive)
-6. [Installation](#installation)
-7. [Usage](#usage)
-8. [Configuration](#configuration)
+1. [Application Under Test](#application-under-test)
+2. [Features](#features)
+3. [Tech Stack](#tech-stack)
+4. [Key Engineering Highlights](#key-engineering-highlights)
+5. [Project Structure](#project-structure)
+6. [Architecture Deep-Dive](#architecture-deep-dive)
+7. [Installation](#installation)
+8. [Usage](#usage)
+9. [Configuration](#configuration)
+
+---
+
+## Application Under Test
+
+The suite targets [GreenKart](https://rahulshettyacademy.com/seleniumPractise/#/), a public demo e-commerce site for buying fresh vegetables and produce online. It's a practice application built for learning automation, which makes it a safe, stable target for demonstrating UI and API testing flows across product search, cart management, promo codes, checkout, and order placement.
 
 ---
 
@@ -65,7 +72,7 @@ A scalable QA automation infrastructure for Web UI and REST API testing, impleme
 ## Project Structure
 
 ```
-playwright-project-claude/
+ecommerce-playwright-infrastructure/
 │
 ├── test_cases/                  # pytest test classes + conftest fixtures
 │   ├── conftest.py              #   init_page, init_api, test_data, verify_after_test, ...
@@ -186,8 +193,8 @@ The `test_data` fixture derives a **suite key** from the test module filename (`
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<your-username>/playwright-project-claude.git
-cd playwright-project-claude
+git clone https://github.com/<your-username>/ecommerce-playwright-infrastructure.git
+cd ecommerce-playwright-infrastructure
 
 # 2. Install Python dependencies
 pip install -r requirements.txt
@@ -221,6 +228,17 @@ allure serve allure-results
 A browser window will open with the full step-level HTML report.
 
 > **Tip:** After any failed test run, open `trace.zip` in the [Playwright Trace Viewer](https://playwright.dev/python/docs/trace-viewer) to replay the session step by step.
+
+---
+
+## CI/CD
+
+This project is integrated with **Jenkins**. The pipeline is configured directly in the Jenkins UI (no Jenkinsfile in the repository) and runs two steps on every execution:
+
+1. Runs the full pytest test suite
+2. Generates and publishes the Allure report
+
+The Allure report provides a detailed breakdown of every test run — pass/fail status, step-level execution details, and screenshots captured during the run — making it easy to track, monitor, and investigate failures without re-running tests locally.
 
 ---
 

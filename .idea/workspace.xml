@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Updating the selectors accordingly - Update the name in all three pages">
+    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Updating the README file and the requirements files">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CLAUDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/CLAUDE.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trace.zip" beforeDir="false" afterPath="$PROJECT_DIR$/trace.zip" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -384,7 +384,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1782376883528</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL‎-00038" summary="Updating the README file and the requirements files">
+      <option name="closed" value="true" />
+      <created>1782381831533</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL‎-00038" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1782381831533</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -402,7 +410,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Removal of duplicate getters code" />
     <MESSAGE value="update to screenshots folder" />
     <MESSAGE value="claude code update #1" />
     <MESSAGE value="claude code update #2" />
@@ -427,6 +434,7 @@
     <MESSAGE value="updating selectors" />
     <MESSAGE value="updating selectors to products_page" />
     <MESSAGE value="Updating the selectors accordingly - Update the name in all three pages" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updating the selectors accordingly - Update the name in all three pages" />
+    <MESSAGE value="Updating the README file and the requirements files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updating the README file and the requirements files" />
   </component>
 </project>
