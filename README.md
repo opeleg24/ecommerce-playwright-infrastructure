@@ -1,4 +1,4 @@
-# E-Commerce Playwright Infrastructure Automation
+# E-Commerce Playwright Automation
 
 A scalable QA automation infrastructure for Web UI and REST API testing, implemented with **Python** and **Playwright**. It uses a layered Page Object Model to separate test logic from page interactions, keeping the suite maintainable, reusable, and easy to extend.
 
