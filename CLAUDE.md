@@ -1,5 +1,10 @@
 # CLAUDE.md — Playwright Python Test Automation Project
 
+## Running Tests
+
+**Never run pytest or the test suite unless the user explicitly asks in the current conversation.**
+`Bash(pytest:*)` is set to `ask` in `settings.local.json` to enforce this — a permission prompt will appear even if the model tries to run it silently.
+
 ## Commands
 
 ```bash

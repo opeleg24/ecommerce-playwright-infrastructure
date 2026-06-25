@@ -43,6 +43,10 @@ class ProductsPage:
         """Build a locator for a strong cell inside the cart-info summary table."""
         return self.page.locator(f"[class='cart-info'] {row} strong")
 
+    def _get_product_card_locator(self, div_index: int, child_selector: str) -> Locator:
+        """Build a locator for an interactive control inside a product card's action area."""
+        return self.product.locator(f"//../div[{div_index}]/{child_selector}")
+
     # =================== ACTIONS ===================
 
     # -- Product card --
@@ -51,13 +55,13 @@ class ProductsPage:
         self.product = self.page.locator(f"//*[contains(text(), '{product_name}')]")
 
     def decrease_quantity(self) -> None:
-        UiActions.click(self.product.locator("//../div[2]/a[1]"))
+        UiActions.click(self._get_product_card_locator(2, "a[1]"))
 
     def increase_quantity(self) -> None:
-        UiActions.click(self.product.locator("//../div[2]/a[2]"))
+        UiActions.click(self._get_product_card_locator(2, "a[2]"))
 
     def click_add_to_cart(self) -> None:
-        UiActions.click(self.product.locator("//../div[3]/button"))
+        UiActions.click(self._get_product_card_locator(3, "button"))
 
     def get_product_price(self) -> str:
         return UiActions.get_text(self.product.locator("//../p").nth(2))
