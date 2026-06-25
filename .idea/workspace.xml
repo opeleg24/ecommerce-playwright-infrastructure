@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Creating more solid methods inside the selectors">
+    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Creating more solid methods inside the selectors #2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page_objects/web_objects/check_out_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/page_objects/web_objects/check_out_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trace.zip" beforeDir="false" afterPath="$PROJECT_DIR$/trace.zip" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,27 +50,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python tests.Python tests for test_cases.test_web.Test_Web.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_page_crucial_information.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_page_header.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_top_deals_search.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;updates-refactor-project&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Automation/Playwright-Project&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python tests.Python tests for test_cases.test_web.Test_Web.executor": "Run",
+    "Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_page_crucial_information.executor": "Run",
+    "Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_page_header.executor": "Run",
+    "Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_top_deals_search.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "updates-refactor-project",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/Automation/Playwright-Project",
+    "settings.editor.selected.configurable": "watcher.settings",
+    "to.speed.mode.migration.done": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Python tests.Python tests for test_cases.test_web.Test_Web">
-    <configuration name="Python tests for test_cases.test_web.Test_Web" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_cases.test_web.Test_Web" type="tests" factoryName="Autodetect" activateToolWindowBeforeRun="false" temporary="true" nameIsGenerated="true">
       <module name="Playwright-Project" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -78,7 +80,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="false" />
       <option name="RUN_TOOL" value="" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;test_cases.test_web.Test_Web&quot;" />
@@ -153,6 +155,13 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python tests.Python tests for test_cases.test_web.Test_Web" />
+      <item itemvalue="Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_page_crucial_information" />
+      <item itemvalue="Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_page_header" />
+      <item itemvalue="Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_top_deals_search" />
+      <item itemvalue="Python tests.Python tests for test_web.Test_Web.test_pages_links" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python tests.Python tests for test_cases.test_web.Test_Web" />
@@ -427,7 +436,23 @@
       <option name="project" value="LOCAL‎" />
       <updated>1782372277906</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL‎-00032" summary="Creating more solid methods inside the selectors #2">
+      <option name="closed" value="true" />
+      <created>1782373135106</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL‎-00032" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1782373135106</updated>
+    </task>
+    <task id="LOCAL‎-00033" summary="Creating more solid methods inside the selectors #2">
+      <option name="closed" value="true" />
+      <created>1782373140971</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL‎-00033" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1782373140971</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -445,7 +470,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="adding requirements.txt" />
     <MESSAGE value="Add footer test and migration state files" />
     <MESSAGE value="Changed functions to move from base page to common operation" />
     <MESSAGE value="updates to conftest" />
@@ -470,6 +494,7 @@
     <MESSAGE value="modifying automation file" />
     <MESSAGE value="updates page #1" />
     <MESSAGE value="Creating more solid methods inside the selectors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating more solid methods inside the selectors" />
+    <MESSAGE value="Creating more solid methods inside the selectors #2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating more solid methods inside the selectors #2" />
   </component>
 </project>

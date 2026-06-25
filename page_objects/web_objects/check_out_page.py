@@ -13,11 +13,6 @@ class CheckOutPage:
         self.page = page
 
         # =================== SELECTORS ===================
-        # -- Table --
-        self.table_product_name = self.page.locator("tbody tr td [class='product-name']")
-        self.table_product_quantity = self.page.locator("tbody tr td [class='quantity']")
-        self.table_product_price = self.page.locator("tbody tr td [class='amount']")
-        self.table_total_price = self.page.locator("tbody tr td [class='amount']")
 
         # -- Middle page information --
         self.middle_page_no_of_items = self.page.locator("[style*='text-align']")
@@ -31,6 +26,11 @@ class CheckOutPage:
         self.code_message = self.page.locator("[class='promoInfo']")
         self.code_input = self.page.locator("[class='promoCode']")
 
+        # -- Table --
+        self.table_product_name = self.page.locator("#productCartTables p[class='product-name']")
+        self.table_product_quantity = self.page.locator("#productCartTables p[class='quantity']")
+        self.table_product_price = self.page.locator("#productCartTables p[class='amount']")
+
     # =================== ACTIONS ===================
     # -- Table getters --
     def get_table_product_name(self) -> str:
@@ -43,7 +43,7 @@ class CheckOutPage:
         return UiActions.get_text(self.table_product_quantity)
 
     def get_table_total_price(self) -> str:
-        return UiActions.get_text(self.table_total_price.last)
+        return UiActions.get_text(self.table_product_price.last)
 
     # -- Middle page getters --
     def get_total_amount(self) -> str:
