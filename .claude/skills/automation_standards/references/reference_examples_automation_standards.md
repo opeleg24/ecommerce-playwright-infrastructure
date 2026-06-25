@@ -187,50 +187,112 @@ against it — no hardcoded host in the page object.
 
 ---
 
-## 3. Locators — Resilient vs Brittle
+## 3. Locators — Project Conventions
 
-Prefer user-facing locators that survive DOM refactors. Declare them as instance
-attributes inside `__init__` under the `# === SELECTORS ===` banner, never as raw
-strings repeated inside methods.
+This project uses three locator strategies, each for a specific role. Declare all stable
+locators as instance attributes inside `__init__` under the SELECTORS banner — never as
+raw strings repeated inside methods.
+
+**Strategy order (use the first that fits):**
+
+| Strategy | When to use | Example |
+|---|---|---|
+| **CSS — ID** | Element has a stable, unique id — most precise; use first | `#productCartTables`, `#productCartTables p[class='product-name']` |
+| **CSS — class/attribute** | No id available — use the attribute-equals form | `[class='cart-icon']`, `[class='totAmt']`, `input[type='search']` |
+| **Text engine** (`text=…`) | Buttons, links, CTAs identified by visible label | `text=Place Order`, `text=PROCEED TO CHECKOUT`, `text=Proceed` |
+| **XPath** | (1) Dynamic visible-text lookup; (2) relative traversal from an anchored element | `//*[contains(text(), '{name}')]`, `//../div[2]/button` |
+
+**What "brittle" means here:** absolute positional XPath from the document root or
+auto-generated id chains — these are the forms that break on every DOM reshuffle.
+Relative XPath anchored to an already-located element is the legitimate alternative.
+
+---
+
+### ❌ Bad — absolute positional XPath and deep unanchored CSS chains
 
 ```python
-# ❌ Bad — brittle, structure-coupled locators inlined in methods
-def open_first_patient(self):
-    self.page.locator("//div[3]/table/tr[2]/td[1]/a").click()        # XPath, positional
-    self.page.locator("div.row > div:nth-child(2) > a.link").click()  # deep CSS chain
+# ❌ Bad — position from root, breaks on any reorder
+def open_first_product(self):
+    self.page.locator("//div[3]/table/tr[2]/td[1]/a").click()           # absolute positional XPath
+    self.page.locator("div.row > div:nth-child(2) > a.link").click()    # deep unanchored CSS chain
 ```
 
+---
+
+### ✅ Good — CSS attribute selectors as SELECTORS attributes
+
 ```python
-# ✅ Good — user-facing locators, declared once as SELECTORS attributes
-class PatientListPage:
+class CheckOutPage:
     def __init__(self, page: Page):
         self.page = page
 
         # =================== SELECTORS ===================
-        self.search_input = self.page.get_by_role("searchbox", name="Search patients")
-        self.add_patient_button = self.page.get_by_role("button", name="Add patient")
+        # -- Middle page information --
+        self.middle_page_total_amount = self.page.locator("[class='totAmt']")
+        self.middle_page_discount_perc = self.page.locator("[class='discountPerc']")
+        self.total_after_discount = self.page.locator("[class='discountAmt']")
 
-    def patient_row(self, full_name: str) -> Locator:
-        """Return the table row locator for a patient by visible name."""
-        # Dynamic locator — parameterised, so stays a method rather than a SELECTORS attribute
-        return self.page.get_by_role("row", name=full_name)
+        # -- Buttons --
+        self.place_order_button = self.page.locator("text=Place Order")
+        self.apply_promo_button = self.page.locator("text=Apply")
 
-    def open_patient(self, full_name: str):
-        """Open a patient's record by their displayed name."""
-        self.patient_row(full_name).get_by_role("link").click()
+        # -- Table --
+        self.table_product_name = self.page.locator("#productCartTables p[class='product-name']")
+        self.table_product_quantity = self.page.locator("#productCartTables p[class='quantity']")
+        self.table_product_price = self.page.locator("#productCartTables p[class='amount']")
 ```
 
-**Locator preference order:** `get_by_role` → `get_by_label` → `get_by_placeholder` /
-`get_by_text` → `get_by_test_id` → CSS (last resort) → *avoid XPath*.
+The `text=…` engine is the CSS attribute selector's sibling: both are stable and readable.
+Use `text=` wherever the element's visible label is its identity.
 
-Playwright locators are **strict**: if a locator matches more than one element, the
-action raises instead of silently using the first. Resolve ambiguity on purpose:
+---
+
+### ✅ Good — XPath for dynamic text lookup and relative traversal
+
+XPath is appropriate in two cases CSS can't cleanly handle:
 
 ```python
-# Narrow a multi-match locator deliberately
-self.page.get_by_role("listitem").filter(has_text="Active").click()
-self.page.get_by_role("button", name="Delete").nth(0).click()
+class ProductsPage:
+    def __init__(self, page: Page):
+        self.page = page
+
+        # =================== SELECTORS ===================
+        # -- Product card (dynamic; set by locate_product) --
+        self.product = None     # resolved at runtime by locate_product()
+
+    # =================== ATOMIC ACTIONS ===================
+    def locate_product(self, product_name: str) -> None:
+        """Store the product card locator matching the given product name."""
+        # XPath: only way to find an element by interpolated runtime text
+        self.product = self.page.locator(f"//*[contains(text(), '{product_name}')]")
+
+    def get_product_price(self) -> str:
+        # XPath relative traversal from self.product — navigates up then to sibling
+        return UiActions.get_text(self.product.locator("//../p").nth(2))
 ```
+
+The `self.product = None` pattern is the standard way to handle **dynamic runtime locators**:
+initialise to `None` in `__init__`, assign in the action method that resolves the identity.
+
+Parameterized locator methods that return a `Locator` directly (without storing an attribute)
+are equally valid when the locator varies per call and never needs to be reused across methods.
+
+---
+
+### ✅ Good — narrowing a multi-match locator deliberately
+
+Playwright locators are **strict**: if a locator matches more than one element, the
+action raises instead of silently using the first. Narrow on purpose:
+
+```python
+# Narrow by index or position
+self.table_product_price.first     # → first matching element
+self.table_product_price.last      # → last matching element
+self.product_name_in_cart.nth(0)   # → first cart product name
+self.product_name_in_cart.nth(1)   # → second cart product name
+```
+
+---
 
 ### 3a. Selector-Builder Helpers
 
@@ -238,6 +300,11 @@ When the same container selector is repeated across SELECTOR attributes that dif
 child fragment, extract a private `_get_<area>_locator(part)` helper. Place it in a
 `# =================== SELECTORS HELPERS ===================` banner between SELECTORS and
 ATOMIC ACTIONS.
+
+Helpers may produce **CSS or XPath** depending on the area's needs. For example,
+`_get_product_card_locator(div_index, child_selector)` builds an XPath relative-traversal
+string for product-card interactions — 2 params, within the acceptable ceiling. The same
+param-cap and naming rules apply regardless of the selector engine used.
 
 ```python
 # ❌ Bad (1) — container selector duplicated in every attribute

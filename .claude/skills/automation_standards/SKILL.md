@@ -26,7 +26,7 @@ This skill targets **Playwright for Python, sync API**, with **pytest-playwright
 **Core Playwright principles to lean on (don't fight the framework):**
 - **Auto-waiting** — Playwright waits for elements to be actionable before acting. Don't add manual sleeps.
 - **Web-first assertions** — `expect(locator)` retries until the condition is met or times out.
-- **Locator strategy** — use CSS attribute selectors (`[class='value']` form) as the default for stable, named elements; the `text=` engine for buttons/links/CTAs; and XPath only for dynamic visible-text lookup (`//*[contains(text(), '…')]`) or relative traversal from an already-located element (`//../div[n]/…`). Avoid absolute positional XPath from the document root and auto-generated id chains. All locators are declared as SELECTORS attributes and narrowed deliberately.
+- **Locator strategy** — for CSS selectors, prefer an `#id` when the element has a stable one; otherwise use the class/attribute form (`[class='value']`). Use the `text=` engine for buttons/links/CTAs. Use XPath only for dynamic visible-text lookup (`//*[contains(text(), '…')]`) or relative traversal from an already-located element (`//../div[n]/…`). Avoid absolute positional XPath from the document root and auto-generated id chains. All locators are declared as SELECTORS attributes and narrowed deliberately.
 
 ---
 
@@ -86,7 +86,9 @@ The high-level method then composes them into a readable, self-documenting flow.
 
 Use locators in this order based on what the target element is:
 
-1. **CSS attribute selectors** — the default for stable, named elements. Use the attribute-equals form (`[class='exact-value']`), descendant combinators, or id+class chains (`#productCartTables p[class='product-name']`). Do not use dot/class shorthand (`.myClass`) when the attribute-equals form makes the intent clearer.
+1. **CSS selectors** — the default for stable, named elements, with an internal priority:
+   - **ID first** (`#productCartTables`) — use a bare `#id` or an `id + class` chain (`#productCartTables p[class='product-name']`) whenever the element has a stable, unique id. IDs are the most precise CSS target.
+   - **Class/attribute selector** (`[class='exact-value']`) — fall back to the attribute-equals form when no id is available. Do not use dot/class shorthand (`.myClass`) — the attribute-equals form is explicit about the exact value.
 2. **Text engine** (`text=…`) — for buttons, links, and CTAs whose identity is their visible label (`text=Place Order`, `text=Proceed`).
 3. **XPath** — for the two cases CSS can't cleanly express:
    - **Dynamic visible-text lookup**: `//*[contains(text(), '{value}')]` to locate an element by interpolated runtime text (e.g. a product card found by name).
