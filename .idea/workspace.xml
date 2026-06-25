@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Making specific methods more dynamic">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Update to page objects products page" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -407,7 +405,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1782385241975</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL‎-00041" summary="Update to page objects products page">
+      <option name="closed" value="true" />
+      <created>1782387098472</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL‎-00041" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1782387098472</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -425,7 +431,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="claude code update #2" />
     <MESSAGE value="claude code updates python standers+" />
     <MESSAGE value="adding verify_expections() fixture" />
     <MESSAGE value="Refactor into a three-layer page object of selectors, atomic actions, and flows" />
@@ -450,6 +455,7 @@
     <MESSAGE value="Updating the README file and the requirements files" />
     <MESSAGE value="Updating the README file and the requirements files&#10;The name of the project" />
     <MESSAGE value="Making specific methods more dynamic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Making specific methods more dynamic" />
+    <MESSAGE value="Update to page objects products page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update to page objects products page" />
   </component>
 </project>
