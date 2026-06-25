@@ -123,6 +123,23 @@ section 3a for selector-builder helper examples, and section 4 for DRY locator l
 - Assert on user-visible state (`to_be_visible`, `to_have_text`, `to_have_value`, `to_be_enabled`) rather than implementation details.
 - Give failing assertions context — assert on a specific, named locator so the failure message points at the right element.
 - **DRY verification — never repeat `Verifications.verify_soft_assert_equals(...)` line-by-line.** When two or more soft-assert checks share the same pattern, build a list of `(actual, expected, message)` 3-tuples and pass them to `HelpersPage.verify_all_soft_equals(...)` from `utilities/helpers_page.py`. Message is **always required** — no 2-tuples.
+- **Scalable verify helpers — prefer `*args` over fixed params.** When a `_verify_*` helper reads the same data for each of N items (prices, names, quantities), use a variadic `*expected_values: T` signature instead of fixed named params. Fixed params hard-code the item count into the method contract — adding a third item forces a signature change, a body change, and caller updates. The variadic form scales to any N with zero changes to the method. Build actuals with a generator, build comparisons with a `for` loop over `enumerate(zip(...))`, and return `tuple[T, ...]`:
+  ```python
+  def _verify_cart_prices(self, *expected_prices: int) -> tuple[int, ...]:
+      """Verify unit prices in the cart and return the actual values."""
+      actual_prices = tuple(
+          int(self.get_cart_product_price(i))
+          for i in range(len(expected_prices))
+      )
+
+      comparisons = []
+      for i, (actual, expected) in enumerate(zip(actual_prices, expected_prices)):
+          comparisons.append((actual, expected, f"price product {i + 1}"))
+
+      HelpersPage.verify_all_soft_equals(*comparisons)
+
+      return actual_prices
+  ```
 
 *(See `references/reference_examples_automation_standards.md` section 6 for assertion examples and section 10 for the data-driven verification pattern.)*
 

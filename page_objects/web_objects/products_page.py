@@ -182,27 +182,30 @@ class ProductsPage:
             (self.get_cart_product_name(1), product_two, "product 2 name"),
         )
 
-    def _verify_cart_prices(self, price_product_one: int, price_product_two: int) -> tuple[int, int]:
-        """Verify the two unit prices in the cart and return the actual values."""
-        actual_price_one = int(self.get_cart_product_price(0))
-        actual_price_two = int(self.get_cart_product_price(1))
-        HelpersPage.verify_all_soft_equals(
-            (actual_price_one, price_product_one, "price product 1"),
-            (actual_price_two, price_product_two, "price product 2"),
+    def _verify_cart_prices(self, *expected_prices: int) -> tuple[int, ...]:
+        """Verify unit prices in the cart and return the actual values."""
+        actual_prices = tuple(
+            int(self.get_cart_product_price(i))
+            for i in range(len(expected_prices))
         )
-        return actual_price_one, actual_price_two
 
-    def _verify_cart_totals(self, actual_price_one: int, actual_price_two: int,
-                            expected_total_for_one_product: int, expected_total_for_two_products: int) -> None:
+        comparisons = []
+        for i, (actual, expected) in enumerate(zip(actual_prices, expected_prices)):
+            comparisons.append((actual, expected, f"price product {i + 1}"))
+
+        HelpersPage.verify_all_soft_equals(*comparisons)
+
+        return actual_prices
+
+    def _verify_cart_totals(self, actual_prices: tuple[int, ...], *expected_totals: int) -> None:
         """Compute per-line totals from cart quantities and verify them."""
-        actual_quantity_one = split_string(self.get_cart_quantity(0))
-        actual_quantity_two = split_string(self.get_cart_quantity(1))
-        total_for_one = calculate_total_price(actual_quantity_one, actual_price_one)
-        total_for_two = calculate_total_price(actual_quantity_two, actual_price_two)
-        HelpersPage.verify_all_soft_equals(
-            (total_for_one, expected_total_for_one_product, "total price product 1"),
-            (total_for_two, expected_total_for_two_products, "total price product 2"),
-        )
+        comparisons = []
+        for i, (actual_price, expected_total) in enumerate(zip(actual_prices, expected_totals)):
+            actual_quantity = split_string(self.get_cart_quantity(i))
+            total = calculate_total_price(actual_quantity, actual_price)
+            comparisons.append((total, expected_total, f"total price product {i + 1}"))
+
+        HelpersPage.verify_all_soft_equals(*comparisons)
 
     @allure.step("Verify cart information in cart panel")
     def verify_cart_information_in_cart(self, data: dict) -> None:
@@ -212,9 +215,9 @@ class ProductsPage:
         # 2. Verify product names
         self._verify_cart_product_names(data["product_one"], data["product_two"])
         # 3. Verify unit prices
-        actual_price_one, actual_price_two = self._verify_cart_prices(
+        actual_prices = self._verify_cart_prices(
             data["product_one_price"], data["product_two_price"])
         # 4. Verify line totals
-        self._verify_cart_totals(actual_price_one, actual_price_two,
+        self._verify_cart_totals(actual_prices,
                                  data["expected_total_price_prod_one"],
                                  data["expected_total_price_prod_two"])

@@ -1,6 +1,7 @@
 import pytest
 import allure
 
+
 from utilities import base
 from workflows.web_flow import WebFlows
 
