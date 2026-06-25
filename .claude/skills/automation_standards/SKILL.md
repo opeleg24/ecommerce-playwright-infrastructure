@@ -87,7 +87,25 @@ The high-level method then composes them into a readable, self-documenting flow.
 - Lean on Playwright's **strictness** — a locator that matches multiple elements raises, which surfaces ambiguity early. Narrow with `.filter()`, `name=`, or `.nth()` deliberately.
 - Never build locators from volatile data (auto-generated ids, deep `div > div > div` paths).
 
-*(See `references/reference_examples_automation_standards.md` section 3 for locator examples and section 4 for DRY locator loops.)*
+**Selector-builder helpers (`SELECTORS HELPERS` section)**
+
+When the same container selector is repeated across SELECTOR attributes that differ only by a
+child fragment, extract a private `_get_<area>_locator(part)` helper into a
+`# =================== SELECTORS HELPERS ===================` banner placed **between**
+SELECTORS and ATOMIC ACTIONS.
+
+- Keep helpers **private (`_`)** and **one per cohesive UI area** — never merge unrelated areas
+  (e.g. `no-results` and `cart-info`) through one generic builder.
+- **Param cap ≤ 3 (hard), prefer 1.** Zero args means the locator is a constant → move it back
+  into `__init__` SELECTORS. A selector-strategy param, or 3+ args assembling selector grammar,
+  signals you're building a DSL → stop.
+- **DRY the knowledge (selectors, magic strings), not the verb (the action idiom).** Named atomic
+  getters that share `UiActions.get_text(...)` stay separate even when they look alike — collapsing
+  them leaks selector fragments to call sites and erases the page's vocabulary. A duplicated idiom
+  is **not** duplicated knowledge.
+
+*(See `references/reference_examples_automation_standards.md` section 3 for locator examples,
+section 3a for selector-builder helper examples, and section 4 for DRY locator loops.)*
 
 ## 5. Waiting & Synchronization
 
@@ -195,6 +213,7 @@ Before completing ANY Playwright automation change, verify:
 - [ ] Repeated soft-assert checks use `HelpersPage.verify_all_soft_equals` with uniform `(actual, expected, message)` 3-tuples — no stacked `verify_soft_assert_equals` calls (section 6)
 - [ ] Test data is structured/typed; `base_url`, creds, and timeouts come from config, not literals (section 7)
 - [ ] Each test body opens with a `# Test Data` block and numbers each action step with `# N. <Action name>` comments; every multi-step FLOW method (page objects and workflow layer) also uses numbered step comments without a `# Test Data` block (section 8)
+- [ ] Repeated container selectors are extracted into a private `SELECTORS HELPERS` section (≤3 params, prefer 1); look-alike atomic getters are kept separate, not collapsed (section 4)
 - [ ] All applicable `python_standards` rules also pass
 
 If any rule is violated, fix it before presenting the code.

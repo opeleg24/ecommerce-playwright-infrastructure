@@ -20,6 +20,7 @@ their own fixtures (see section 8), never raw browser plumbing.
 1. [Atomic Action Methods (Extract Method for Page Objects)](#1-atomic-action-methods-extract-method-for-page-objects)
 2. [Page Objects with Injected `Page`](#2-page-objects-with-injected-page)
 3. [Locators — Resilient vs Brittle](#3-locators--resilient-vs-brittle)
+   - [3a. Selector-Builder Helpers](#3a-selector-builder-helpers)
 4. [DRY Locator Loops](#4-dry-locator-loops)
 5. [Auto-Waiting & Synchronization](#5-auto-waiting--synchronization)
 6. [Assertions — Web-First `expect`](#6-assertions--web-first-expect)
@@ -230,6 +231,94 @@ action raises instead of silently using the first. Resolve ambiguity on purpose:
 self.page.get_by_role("listitem").filter(has_text="Active").click()
 self.page.get_by_role("button", name="Delete").nth(0).click()
 ```
+
+### 3a. Selector-Builder Helpers
+
+When the same container selector is repeated across SELECTOR attributes that differ only by a
+child fragment, extract a private `_get_<area>_locator(part)` helper. Place it in a
+`# =================== SELECTORS HELPERS ===================` banner between SELECTORS and
+ATOMIC ACTIONS.
+
+```python
+# ❌ Bad (1) — container selector duplicated in every attribute
+class ProductsPage:
+    def __init__(self, page: Page):
+        # =================== SELECTORS ===================
+        self.no_results_heading     = self.page.locator("[class='no-results'] h2")  # "no-results" ×2
+        self.no_results_description = self.page.locator("[class='no-results'] p")   # duplicated
+        self.header_item_count  = self.page.locator("[class='cart-info'] tr:first-child strong")
+        self.header_total_price = self.page.locator("[class='cart-info'] tr:last-child strong")  # duplicated
+```
+
+```python
+# ❌ Bad (2) — over-generic "selector engine"; leaks raw DOM fragments to call sites
+class ProductsPage:
+    # 3 params + strategy param = building a DSL → too much
+    def _get_locator(self, container: str, child: str, strategy: str = "css") -> Locator:
+        return self.page.locator(f"[class='{container}'] {child}")
+
+    def get_no_results_heading(self) -> str:
+        return UiActions.get_text(self._get_locator("no-results", "h2"))          # fragment leaks out
+
+    def get_header_item_count(self) -> str:
+        return UiActions.get_text(self._get_locator("cart-info", "tr:first-child strong"))  # same
+```
+
+```python
+# ✅ Good — one private 1-param helper per UI area; named atomic getters preserve the domain vocabulary
+from playwright.sync_api import Locator, Page
+from extentions.ui_actions import UiActions
+
+
+class ProductsPage:
+    def __init__(self, page: Page):
+        self.page = page
+
+        # =================== SELECTORS ===================
+        # (no duplicated container strings — each helper owns its container)
+        self.cart_icon = self.page.locator("[class='cart-icon']")
+        ...
+
+    # =================== SELECTORS HELPERS ===================
+    def _get_no_results_locator(self, tag: str) -> Locator:
+        """Build a locator for an element inside the no-results empty-state block."""
+        return self.page.locator(f"[class='no-results'] {tag}")
+
+    def _get_cart_info_locator(self, row: str) -> Locator:
+        """Build a locator for a strong cell inside the cart-info summary table."""
+        return self.page.locator(f"[class='cart-info'] {row} strong")
+
+    # =================== ATOMIC ACTIONS ===================
+    # Each getter encodes a unique domain fact.
+    # Their shared UiActions.get_text(...) is a repeated *idiom*, not repeated *knowledge* — keep separate.
+    def get_no_results_heading(self) -> str:
+        return UiActions.get_text(self._get_no_results_locator("h2"))
+
+    def get_no_results_description(self) -> str:
+        return UiActions.get_text(self._get_no_results_locator("p"))
+
+    def get_header_item_count(self) -> str:
+        return UiActions.get_text(self._get_cart_info_locator("tr:first-child"))
+
+    def get_header_total_price(self) -> str:
+        return UiActions.get_text(self._get_cart_info_locator("tr:last-child"))
+```
+
+**Rules at a glance:**
+
+| # params | Decision |
+|---|---|
+| 0 | It's a constant locator → belongs in `__init__` SELECTORS, not a helper |
+| 1 | Sweet spot — fixed container, one varying child |
+| 2 | Acceptable ceiling when genuinely needed |
+| 3+ | You're building a selector DSL → stop |
+
+**Why keep the four atomic getters separate?**
+`get_no_results_heading` and `get_no_results_description` share the same `UiActions.get_text(...)` call.
+That's a repeated *idiom* (a verb), not repeated *knowledge*. Each getter encodes a unique, independent
+fact — "the heading is `h2`", "the description is `p`" — in exactly one place. Collapsing them into
+`get_no_results_text("h2")` would leak `"h2"` to every caller and destroy the method's self-documenting name.
+*Duplicated idiom is not duplicated knowledge.*
 
 ---
 
