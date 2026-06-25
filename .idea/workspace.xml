@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="updating selectors to products_page">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/page_objects/web_objects/products_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/page_objects/web_objects/products_page.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trace.zip" beforeDir="false" afterPath="$PROJECT_DIR$/trace.zip" afterDir="false" />
-    </list>
+    <list default="true" id="d5ea55a8-06e1-45ea-8876-14b8e58b5123" name="Changes" comment="Updating the selectors accordingly - Update the name in all three pages" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,109 +66,6 @@
     "to.speed.mode.migration.done": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Python tests.Python tests">
-    <configuration name="Python tests for test_cases.test_web.Test_Web.test_verify_page_crucial_information" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="Playwright-Project" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="false" />
-      <option name="RUN_TOOL" value="" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_cases.test_web.Test_Web.test_verify_page_crucial_information&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests for test_cases.test_web.Test_Web.test_verify_page_header" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="Playwright-Project" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="true" />
-      <option name="RUN_TOOL" value="" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_cases.test_web.Test_Web.test_verify_page_header&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests for test_cases.test_web.Test_Web.test_verify_top_deals_search" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="Playwright-Project" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="true" />
-      <option name="RUN_TOOL" value="" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_cases.test_web.Test_Web.test_verify_top_deals_search&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests for test_web.Test_Web.test_pages_links" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="full_stack_automation_final_project_2024" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../full_stack_automation_final_project_2024/test_cases" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="true" />
-      <option name="RUN_TOOL" value="" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_web.Test_Web.test_pages_links&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests" type="tests" factoryName="Autodetect" activateToolWindowBeforeRun="false" temporary="true" nameIsGenerated="true">
-      <module name="Playwright-Project" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="false" />
-      <option name="RUN_TOOL" value="" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;&quot;" />
-      <option name="_new_targetType" value="&quot;CUSTOM&quot;" />
-      <method v="2" />
-    </configuration>
-    <list>
-      <item itemvalue="Python tests.Python tests" />
-      <item itemvalue="Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_page_crucial_information" />
-      <item itemvalue="Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_page_header" />
-      <item itemvalue="Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_top_deals_search" />
-      <item itemvalue="Python tests.Python tests for test_web.Test_Web.test_pages_links" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python tests.Python tests" />
-        <item itemvalue="Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_page_crucial_information" />
-        <item itemvalue="Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_page_header" />
-        <item itemvalue="Python tests.Python tests for test_web.Test_Web.test_pages_links" />
-        <item itemvalue="Python tests.Python tests for test_cases.test_web.Test_Web.test_verify_top_deals_search" />
-      </list>
-    </recent_temporary>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -469,7 +362,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1782376028119</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL‎-00036" summary="Updating the selectors accordingly - Update the name in all three pages">
+      <option name="closed" value="true" />
+      <created>1782376762144</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL‎-00036" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1782376762144</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -487,7 +388,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="updates to conftest" />
     <MESSAGE value="Removal of duplicate getters code" />
     <MESSAGE value="update to screenshots folder" />
     <MESSAGE value="claude code update #1" />
@@ -512,6 +412,7 @@
     <MESSAGE value="Creating more solid methods inside the selectors #2" />
     <MESSAGE value="updating selectors" />
     <MESSAGE value="updating selectors to products_page" />
-    <option name="LAST_COMMIT_MESSAGE" value="updating selectors to products_page" />
+    <MESSAGE value="Updating the selectors accordingly - Update the name in all three pages" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updating the selectors accordingly - Update the name in all three pages" />
   </component>
 </project>
