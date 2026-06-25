@@ -5,7 +5,9 @@ description: >
   Use this skill EVERY TIME you write, modify, create, or refactor Playwright automation —
   page objects, test flows, locators, assertions, fixtures, or waits.
   Covers the Page Object Model with pytest-playwright fixtures, atomic action methods,
-  Playwright locator best practices (role/label/test-id, web-first assertions, auto-waiting),
+  Playwright locator conventions (CSS attribute selectors as the default; the text= engine
+  for buttons and links; XPath for dynamic visible-text lookup and relative traversal from an
+  anchored element; web-first assertions; auto-waiting),
   and how to keep tests reliable and readable.
   Uses the Playwright sync API. For pure language-level rules (naming, typing, SOLID,
   DRY, idioms), see the separate python_standards skill — this skill assumes those and
@@ -24,7 +26,7 @@ This skill targets **Playwright for Python, sync API**, with **pytest-playwright
 **Core Playwright principles to lean on (don't fight the framework):**
 - **Auto-waiting** — Playwright waits for elements to be actionable before acting. Don't add manual sleeps.
 - **Web-first assertions** — `expect(locator)` retries until the condition is met or times out.
-- **Resilient locators** — prefer user-facing locators (`get_by_role`, `get_by_label`, `get_by_text`, `get_by_test_id`) over CSS/XPath tied to DOM structure.
+- **Locator strategy** — use CSS attribute selectors (`[class='value']` form) as the default for stable, named elements; the `text=` engine for buttons/links/CTAs; and XPath only for dynamic visible-text lookup (`//*[contains(text(), '…')]`) or relative traversal from an already-located element (`//../div[n]/…`). Avoid absolute positional XPath from the document root and auto-generated id chains. All locators are declared as SELECTORS attributes and narrowed deliberately.
 
 ---
 
@@ -82,10 +84,18 @@ The high-level method then composes them into a readable, self-documenting flow.
 
 ## 4. Locators
 
-- **Prefer user-facing locators** in this order: `get_by_role` → `get_by_label` → `get_by_placeholder` / `get_by_text` → `get_by_test_id`. Fall back to CSS only when nothing user-facing fits; avoid XPath and brittle structural chains.
-- Define locators as **`__init__` SELECTORS instance attributes** on the page object (grouped under the `# === SELECTORS ===` banner), not as raw strings repeated inside methods.
-- Lean on Playwright's **strictness** — a locator that matches multiple elements raises, which surfaces ambiguity early. Narrow with `.filter()`, `name=`, or `.nth()` deliberately.
-- Never build locators from volatile data (auto-generated ids, deep `div > div > div` paths).
+Use locators in this order based on what the target element is:
+
+1. **CSS attribute selectors** — the default for stable, named elements. Use the attribute-equals form (`[class='exact-value']`), descendant combinators, or id+class chains (`#productCartTables p[class='product-name']`). Do not use dot/class shorthand (`.myClass`) when the attribute-equals form makes the intent clearer.
+2. **Text engine** (`text=…`) — for buttons, links, and CTAs whose identity is their visible label (`text=Place Order`, `text=Proceed`).
+3. **XPath** — for the two cases CSS can't cleanly express:
+   - **Dynamic visible-text lookup**: `//*[contains(text(), '{value}')]` to locate an element by interpolated runtime text (e.g. a product card found by name).
+   - **Relative traversal from an anchored element**: `//../div[{n}]/…` or `//../p` to navigate the DOM relative to an element already located. XPath anchored to a parent locator is acceptable; absolute positional XPath from the document root is not.
+
+- Define locators as **`__init__` SELECTORS instance attributes** on the page object (grouped under the `# =================== SELECTORS ===================` banner), not as raw strings repeated inside methods.
+- **Dynamic runtime locators** — when a locator depends on runtime data (e.g. a product card found by name at test time), initialise the attribute to `None` in `__init__` and assign it in the action method that resolves it (e.g. `locate_product`). **Parameterized locator methods** that return a `Locator` (rather than storing an instance attribute) are also acceptable when the locator varies per call.
+- Lean on Playwright's **strictness** — a locator that matches multiple elements raises, which surfaces ambiguity early. Narrow deliberately with `.filter()`, `.nth()`, `.first`, or `.last`.
+- **Never build locators from absolute positional paths** (`//div[3]/table/tr[2]/td[1]/a`) or auto-generated id chains — these are the genuinely brittle forms. Relative XPath anchored to a parent element is the legitimate alternative.
 
 **Selector-builder helpers (`SELECTORS HELPERS` section)**
 
@@ -96,6 +106,9 @@ SELECTORS and ATOMIC ACTIONS.
 
 - Keep helpers **private (`_`)** and **one per cohesive UI area** — never merge unrelated areas
   (e.g. `no-results` and `cart-info`) through one generic builder.
+- Helpers may produce **CSS or XPath** fragments depending on the area's needs — e.g. a helper
+  for a dynamic product-card interaction area may build an XPath relative traversal string. The
+  same strategy and param-cap rules apply regardless of the selector engine used.
 - **Param cap ≤ 3 (hard), prefer 1.** Zero args means the locator is a constant → move it back
   into `__init__` SELECTORS. A selector-strategy param, or 3+ args assembling selector grammar,
   signals you're building a DSL → stop.
@@ -223,7 +236,7 @@ Before completing ANY Playwright automation change, verify:
 - [ ] Page objects receive an injected `Page` (from the `page` fixture) — none create their own (section 1)
 - [ ] Each page object is exposed via its own pytest fixture; tests don't wire up raw `Page` (section 1)
 - [ ] Each page object is split into SELECTORS / ATOMIC ACTIONS / FLOWS sections with comment banners; flows use only that page's own atomic actions; cross-page flows live in the workflow layer (section 2)
-- [ ] Locators are declared as `__init__` SELECTORS instance attributes (section 2), using user-facing `get_by_role`/`get_by_label`/`get_by_test_id` where possible; no XPath or brittle CSS (section 4)
+- [ ] Locators are declared as `__init__` SELECTORS instance attributes (or as runtime-assigned attributes / parameterized methods when dynamic); strategy follows the project order: CSS attribute selectors (`[class='…']` form) as the default → `text=` for buttons/links → XPath only for dynamic visible-text lookup or relative traversal anchored to a parent; no absolute positional XPath from root and no auto-generated id chains (section 4)
 - [ ] Large flows are decomposed into atomic action methods; names replace comments (section 3)
 - [ ] No manual sleeps or `wait_for_timeout` for sync — auto-waiting and `expect` used instead (section 5)
 - [ ] UI state checked with web-first `expect(locator)` assertions, not one-shot `assert` (section 6)
