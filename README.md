@@ -1,4 +1,4 @@
-# E-Commerce Playwright Infrastructure
+# E-Commerce Playwright Infrastructure Automation
 
 A scalable QA automation infrastructure for Web UI and REST API testing, implemented with **Python** and **Playwright**. It uses a layered Page Object Model to separate test logic from page interactions, keeping the suite maintainable, reusable, and easy to extend.
 
@@ -72,7 +72,7 @@ The suite targets [GreenKart](https://rahulshettyacademy.com/seleniumPractise/#/
 ## Project Structure
 
 ```
-ecommerce-playwright-infrastructure/
+ecommerce-playwright-automation/
 │
 ├── test_cases/                  # pytest test classes + conftest fixtures
 │   ├── conftest.py              #   init_page, init_api, test_data, verify_after_test, ...
@@ -193,8 +193,8 @@ The `test_data` fixture derives a **suite key** from the test module filename (`
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<your-username>/ecommerce-playwright-infrastructure.git
-cd ecommerce-playwright-infrastructure
+git clone https://github.com/<your-username>/ecommerce-playwright-automation.git
+cd ecommerce-playwright-automation
 
 # 2. Install Python dependencies
 pip install -r requirements.txt
