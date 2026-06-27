@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Write",
+      "Bash(git:*)",
+      "Bash(npm:*)",
+      "Bash(node:*)",
+      "Bash(cat:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(mkdir:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf /*)"
+    ],
+    "ask": [
+      "Bash(pytest:*)"
+    ]
+  },
+  "model": "opusplan"
+}
