@@ -12,9 +12,9 @@ class CountryPage:
         self.page = page
 
         # =================== SELECTORS ===================
-        self.select_country = self.page.locator("select")
-        self.terms_conditions_checkbox = self.page.locator("[class='chkAgree']")
-        self.proceed_button = self.page.locator("text=Proceed")
+        self.select_country = self.page.get_by_role("combobox")
+        self.terms_conditions_checkbox = self.page.get_by_role("checkbox")
+        self.proceed_button = self.page.get_by_role("button", name="Proceed")
         self.success_message = self.page.locator("[class='products'] span").first
 
     # =================== ACTIONS ===================

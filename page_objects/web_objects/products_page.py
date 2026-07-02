@@ -16,12 +16,12 @@ class ProductsPage:
         # =================== SELECTORS ===================
         # -- Page header / footer --
         self.page_header = self.page.locator("[class='brand greenLogo']")
-        self.page_footer = self.page.locator("footer")
+        self.page_footer = self.page.get_by_role("contentinfo")
 
         # -- Product card (dynamic; set by locate_product) --
         self.product = None
         # -- Search --
-        self.search_box = self.page.locator("input[type='search']")
+        self.search_box = self.page.get_by_role("searchbox")
         self.no_results_image = self.page.locator("[class='no-results'] img")
 
         # -- Cart indicator (header) --
@@ -32,7 +32,7 @@ class ProductsPage:
         self.product_original_price_in_cart = self.page.locator("[class='cart-item'] p[class='product-price']")
         self.product_total_amount_in_cart = self.page.locator("p[class='amount']")
         self.quantity = self.page.locator("[class='cart-item'] [class='quantity']")
-        self.proceed_to_checkout = self.page.locator("text=PROCEED TO CHECKOUT")
+        self.proceed_to_checkout = self.page.get_by_role("button", name="PROCEED TO CHECKOUT")
 
     # =================== SELECTORS HELPERS ===================
     def _get_no_results_locator(self, tag: str) -> Locator:

@@ -21,10 +21,10 @@ class CheckOutPage:
         self.total_after_discount = self.page.locator("[class='discountAmt']")
 
         # -- Buttons --
-        self.place_order_button = self.page.locator("text=Place Order")
-        self.apply_promo_button = self.page.locator("text=Apply")
+        self.place_order_button = self.page.get_by_role("button", name="Place Order")
+        self.apply_promo_button = self.page.get_by_role("button", name="Apply")
         self.code_message = self.page.locator("[class='promoInfo']")
-        self.code_input = self.page.locator("[class='promoCode']")
+        self.code_input = self.page.get_by_placeholder("Enter promo code")
 
         # -- Table --
         self.table_product_name = self.page.locator("#productCartTables p[class='product-name']")
